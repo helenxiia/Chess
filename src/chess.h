@@ -1,8 +1,6 @@
 #ifndef CHESS_H_
 #define CHESS_H_
 
-#include <map>
-
 #include "board.h"
 
 class Chess : public Board {
@@ -13,7 +11,13 @@ class Chess : public Board {
     // constructor and destructor
     Chess(); 
     ~Chess();
-    // 
+    // initialize chess board
+    void init(vector<string> players);
+    void create_players();
+    // game is over when checkmate or stalemate is true
+    bool game_over();
+    // Chess must observe its Pieces for check, checkmate, stalemate
+    void notify();
 };
 
 #endif

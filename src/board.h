@@ -2,6 +2,9 @@
 #define BOARD_H_
 
 #include <vector>
+#include <map>
+
+#include "observer.h" // Board observes its Pieces
 
 // forward declare
 class Cell;
@@ -29,10 +32,12 @@ class Board {
     Board();
     ~Board();
     // initialize the board as needed
-    virtual void init() = 0; 
+    virtual void init(vector<string> players); = 0; 
     virtual void create_players() = 0; // create the players
     // returns whether or not the game is over
     virtual bool game_over() = 0; 
+    // Board observes Piece
+    virtual void notify() = 0;
     // run the game
     void run(); 
 };
