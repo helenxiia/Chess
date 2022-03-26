@@ -1,10 +1,25 @@
 #include "board.h"
 
+using namespace std;
+
+// static map
+map<int, float> Board::score = map<int, float>();
+
 // constructor
 Board::Board() {}
 
 // destructor
 Board::~Board() { /* delete pointers probably */ } 
+
+// modify scoreboard
+void Board::modify_score(int player, float point) {
+    if (!score.count(player)) { // player is not in map yet
+        score.insert({player, point});
+    } else {
+        auto it = score.find(player); // find the current score
+        it->second = it->second + point; // add new score to cumulative score
+    }
+}
 
 // run the game
 void Board::run() {

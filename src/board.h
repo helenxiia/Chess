@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <string>
 
 #include "observer.h" // Board observes its Pieces
 
@@ -13,6 +14,7 @@ class Piece;
 class Player;
 
 class Board {
+  protected:
     // board that the game is being played on
     std::vector<std::vector<Cell*>> the_board; 
     // vector of previous moves made during the game
@@ -26,18 +28,20 @@ class Board {
     // returns whether or not the game is in play
     bool currently_playing; 
     // maps player to their current score
-    static std::map<int, int> score; 
+    static std::map<int, float> score; 
   public:
     // constructor and destructor
     Board();
     ~Board();
     // initialize the board as needed
-    virtual void init(vector<string> players); = 0; 
-    virtual void create_players() = 0; // create the players
+    virtual void init() = 0; 
+    virtual void create_players(std::vector<std::string> player_names) = 0; // create the players
     // returns whether or not the game is over
     virtual bool game_over() = 0; 
     // Board observes Piece
     virtual void notify() = 0;
+    // edit the score board
+    static void modify_score(int player, float point);
     // run the game
     void run(); 
 };

@@ -12,8 +12,8 @@ class Chess : public Board {
     Chess(); 
     ~Chess();
     // initialize chess board
-    void init(vector<string> players);
-    void create_players();
+    void init();
+    void create_players(std::vector<std::string> player_names);
     // game is over when checkmate or stalemate is true
     bool game_over();
     // Chess must observe its Pieces for check, checkmate, stalemate
