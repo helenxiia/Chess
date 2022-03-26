@@ -1,4 +1,5 @@
 #include "chess.h"
+#include "cell.h"
 
 using namespace std;
 
@@ -10,7 +11,12 @@ Chess::~Chess() {}
 
 // initialize a chess board
 void Chess::init() {
-
+    // set the_board to an 8x8
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            the_board[i][j] = new Cell(i, j); // create new cells
+        }
+    }
 }
 
 // create players
@@ -27,11 +33,13 @@ bool Chess::game_over() {
                 modify_score(i, 1); // add 1 to score
             }
         }
+        return true;
     } else if (stalemate) { // stalemate
         // NOT SURE IF THIS IS HOW MULTIPLAYER CHESS POINTS WORK
         for (int i = 0; i < (int) players.size(); ++i) {
             modify_score(i, 0.5); // everyone gets half a point
         }
+        return true;
     } else {
         return false;
     }

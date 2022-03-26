@@ -6,7 +6,8 @@ using namespace std;
 map<int, float> Board::score = map<int, float>();
 
 // constructor
-Board::Board() {}
+Board::Board() : the_board{vector<vector<Cell*>>()}, previous_moves{vector<Move*>()}, 
+                    pieces{vector<Piece*>()}, players{vector<Player*>()}, turn{0}, currently_playing{true} {}
 
 // destructor
 Board::~Board() { /* delete pointers probably */ } 

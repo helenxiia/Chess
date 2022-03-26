@@ -1,0 +1,31 @@
+#ifndef CELL_H_
+#define CELL_H_
+
+#include <map>
+
+// forward declare for now
+class Piece; // there is a circular declaration going on with Piece and Cell, not sure what will happen rn
+
+class Cell {
+    Piece *piece;
+    int row;
+    int col;
+    int status;
+    std::map<int, int> threats;
+  public:
+    // constructor and destructor
+    Cell(int row, int col);
+    ~Cell();
+    Piece* get_piece(); // gets piece
+    void set_piece(Piece *piece); // sets piece
+    void remove_piece(); // removes piece, only used in setup mode
+    int get_row(); // gets row
+    int get_col(); // gets col
+    int get_status(); // gets status
+    int get_threats(int player); // gets number of threats based on player
+    // Cells observe Pieces
+    // check what their valid moves are, updated threats as needed
+    void notify();
+};
+
+#endif
