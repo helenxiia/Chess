@@ -1,4 +1,5 @@
 #include "board.h"
+#include "move.h"
 
 using namespace std;
 
@@ -28,7 +29,11 @@ void Board::run() {
         Player *cur_player = players.at(turn); // get which player is playing, based on the turn
         try {
             // ---- NEED CLASSES TO BE DEFINED ---- //
-            // Move move = cur_player->make_move();
+            // WE MAY NEED A COPY CONSTRUCTOR HERE
+            // SINCE I DON'T WANT TO DO THAT, LETS HAVE PLAYER RETURN A VECTOR WITH THE INFORMATION NEEDED FOR MOVE
+            // IE. LAST_PIECE, CURRENT_PIECE, INITIAL_CELL, FINAL_CELL
+            // THIS INCREASES COUPLING THO
+            // Move move = cur_player->make_move(); 
             // previous_moves.emplace_back(move);
 
             // increment turn
@@ -37,6 +42,12 @@ void Board::run() {
             } else {
                 ++turn;
             }
+            // increment count
+            ++count;
+
+            // create move
+            // Move *move  = new Move();
+            // previous_moves.emplace_back(move);
         } catch (...) { // probably should define some error here
             // throw invalid move
         }

@@ -25,6 +25,8 @@ class Board {
     std::vector<Player*> players; 
     // numerical value representing which player's turn it is
     int turn; 
+    // numerical value counting the number of rounds that have been played
+    int count;
     // returns whether or not the game is in play
     bool currently_playing; 
     // maps player to their current score
@@ -42,6 +44,8 @@ class Board {
     virtual void notify() = 0;
     // edit the score board
     static void modify_score(int player, float point);
+    // setup mode
+    void setup();
     // run the game
     void run(); 
 };
