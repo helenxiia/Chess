@@ -8,8 +8,8 @@ Move::Move(Piece *last_piece, Piece *current_piece, Cell *initial_cell, Cell *fi
 
 // destructor
 Move::~Move() {
-    delete last_piece;
-    delete current_piece;
-    delete initial_cell;
-    delete final_cell;
+    // delete last_piece;
+    // delete current_piece;
+    // delete initial_cell;
+    // delete final_cell;
 }

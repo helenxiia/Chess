@@ -10,7 +10,7 @@ using namespace std;
 int main() {
     Chess *chess_game = new Chess();
     // get input 
-    // should only get "game white-player black-player"
+    // should only get "game white-player black-player" and setup
     // other input should all be handled in other classes
     string s;
     while (getline(cin, s)) { 
@@ -27,6 +27,9 @@ int main() {
             chess_game->init(); // initalize
             chess_game->create_players(player_names); // create players
             chess_game->run(); // run game
+        } else if (cmd == "setup") {
+            // setup mode
+            chess_game->setup(); // call setup
         }
     }
 }

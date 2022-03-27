@@ -19,6 +19,6 @@ class Move {
     // constructor and destructor
     Move(Piece *last_piece, Piece *current_piece, Cell *initial_cell, Cell *final_cell, int turn);
     ~Move();
-}
+};
 
 #endif
