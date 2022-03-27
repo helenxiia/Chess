@@ -1,10 +1,6 @@
 #include "board.h"
 #include "move.h"
 
-#include <iostream>
-#include <sstream>
-#include <string>
-
 using namespace std;
 
 // static map
@@ -24,26 +20,6 @@ void Board::modify_score(int player, float point) {
     } else {
         auto it = score.find(player); // find the current score
         it->second = it->second + point; // add new score to cumulative score
-    }
-}
-
-// setup mode
-void Board::setup() {
-    string s;
-    while (getline(cin, s)) { 
-        istringstream ss{s};
-        string cmd;
-        ss >> cmd;
-        if (cmd == "+") { // places piece
-
-        } else if (cmd == "-") { // removes piece
-            
-        } else if (cmd == "=") { // sets turn
-
-        } else if (cmd == "done") {
-            // check if setup is valid
-            break;
-        }
     }
 }
 

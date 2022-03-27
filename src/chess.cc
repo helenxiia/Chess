@@ -49,3 +49,24 @@ bool Chess::game_over() {
 void Chess::notify() {
 
 }
+
+// setup chess board mode
+// setup mode
+void Chess::setup() {
+    string s;
+    while (getline(cin, s)) { 
+        istringstream ss{s};
+        string cmd;
+        ss >> cmd;
+        if (cmd == "+") { // places piece
+
+        } else if (cmd == "-") { // removes piece
+            
+        } else if (cmd == "=") { // sets turn
+
+        } else if (cmd == "done") {
+            // check if setup is valid
+            break;
+        }
+    }
+}

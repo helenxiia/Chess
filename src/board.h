@@ -4,6 +4,9 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #include "observer.h" // Board observes its Pieces
 
@@ -45,7 +48,7 @@ class Board {
     // edit the score board
     static void modify_score(int player, float point);
     // setup mode
-    void setup();
+    virtual void setup() = 0;
     // run the game
     void run(); 
 };
