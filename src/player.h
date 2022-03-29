@@ -5,4 +5,4 @@ class Player {
     public:
     void make_move();
     void notify();
-}
+};
