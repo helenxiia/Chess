@@ -29,6 +29,7 @@ void Human::make_move() {
             char colf = pos2[0] - off_set;
             char rowf = pos2[1];
 
+            try {
             // we also need to know what piece is moving 
             unique_ptr<Piece> p = the_board[coli,rowi].get_piece();
 
@@ -37,7 +38,10 @@ void Human::make_move() {
 
             // sets the piece in the board at col,row
             the_board[colf,rowf].set_piece(p);
-
+            }
+            catch ( out_of_range r) {
+                cerr << "Range error" << r.what() << endl;
+            }
         }
     }
 }
