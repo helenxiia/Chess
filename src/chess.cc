@@ -20,7 +20,7 @@ void Chess::init() {
         }
         the_board.emplace_back(move(row));
     }
-    td->print_board();
+    td->print_board("chess");
 }
 
 // create players

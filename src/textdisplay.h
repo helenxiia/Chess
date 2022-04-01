@@ -11,7 +11,7 @@ class TextDisplay {
     Board *board; 
   public:
     TextDisplay(Board *board); // constructor
-    void print_board(); // print out the board
+    void print_board(const std::string &gametype); // print out the board
 };
 
 #endif
