@@ -13,11 +13,14 @@ Chess::~Chess() {}
 void Chess::init() {
     // set the_board to an 8x8
     for (int i = 0; i < 8; ++i) {
+        vector<unique_ptr<Cell>> row;
         for (int j = 0; j < 8; ++j) {
-            unique_ptr<Cell> new_cell{new Cell(i, j)}; // create new cells
-            the_board[i][j] = move(new_cell);
+            // create new cells
+            row.emplace_back(unique_ptr<Cell>{new Cell(i, j)});
         }
+        the_board.emplace_back(move(row));
     }
+    td->print_board();
 }
 
 // create players

@@ -16,6 +16,7 @@ class Cell;
 class Move;
 class Piece;
 class Player;
+class TextDisplay;
 
 class Board {
   protected:
@@ -35,13 +36,17 @@ class Board {
     bool currently_playing; 
     // maps player to their current score
     static std::map<int, float> score; 
+    TextDisplay *td;
   public:
     // constructor and destructor
     Board();
     ~Board();
     // initialize the board as needed
     virtual void init() = 0; 
-    virtual void create_players(std::vector<std::string> player_names) = 0; // create the players
+    // get the board
+    std::vector<std::vector<Cell*>> get_board();
+    // create the players
+    virtual void create_players(std::vector<std::string> player_names) = 0;
     // returns whether or not the game is over
     virtual bool game_over() = 0; 
     // Board observes Piece

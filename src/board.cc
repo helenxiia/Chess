@@ -4,6 +4,7 @@
 #include "move.h"
 #include "player.h"
 #include "piece.h"
+#include "textdisplay.h"
 
 using namespace std;
 
@@ -12,10 +13,25 @@ map<int, float> Board::score = map<int, float>();
 
 // constructor
 Board::Board() : the_board{vector<vector<unique_ptr<Cell>>>()}, previous_moves{vector<unique_ptr<Move>>()}, 
-                    pieces{vector<unique_ptr<Piece>>()}, players{vector<unique_ptr<Player>>()}, turn{0}, currently_playing{true} {}
+                    pieces{vector<unique_ptr<Piece>>()}, players{vector<unique_ptr<Player>>()}, turn{0}, currently_playing{true},
+                    td{new TextDisplay(this)} {}
 
 // destructor
 Board::~Board() { /* delete pointers probably */ } 
+
+// get reference to board
+vector<vector<Cell*>> Board::get_board() {
+    vector<vector<Cell*>> ref_board;
+    for (int i = 0; i < (int) the_board.size(); ++i) {
+            vector<Cell*> ref_row;
+        for (int j = 0; j < (int) the_board.at(i).size(); ++j) {
+            Cell *c = the_board[i][j].get();
+            ref_row.emplace_back(c);
+        }
+        ref_board.emplace_back(ref_row);
+    }
+    return ref_board;
+}
 
 // modify scoreboard
 void Board::modify_score(int player, float point) {

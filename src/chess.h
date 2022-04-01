@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "board.h"
+#include "textdisplay.h"
 
 class Chess : public Board {
     int checkmate; // -1 if no checkmate, 0 if white is in checkmate, 1 if black is in checkmate etc.
