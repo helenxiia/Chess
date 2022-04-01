@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <memory>
 
 #include "observer.h" // Board observes its Pieces
 
@@ -19,13 +20,13 @@ class Player;
 class Board {
   protected:
     // board that the game is being played on
-    std::vector<std::vector<Cell*>> the_board; 
+    std::vector<std::vector<std::unique_ptr<Cell>>> the_board; 
     // vector of previous moves made during the game
-    std::vector<Move*> previous_moves; 
+    std::vector<std::unique_ptr<Move>> previous_moves; 
     // vector of pieces that are in the game
-    std::vector<Piece*> pieces; 
+    std::vector<std::unique_ptr<Piece>> pieces; 
     // participants of the game, 0 is white, 1 is black
-    std::vector<Player*> players; 
+    std::vector<std::unique_ptr<Player>> players; 
     // numerical value representing which player's turn it is
     int turn; 
     // numerical value counting the number of rounds that have been played

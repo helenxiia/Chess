@@ -14,7 +14,8 @@ void Chess::init() {
     // set the_board to an 8x8
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            the_board[i][j] = new Cell(i, j); // create new cells
+            unique_ptr<Cell> new_cell{new Cell(i, j)}; // create new cells
+            the_board[i][j] = move(new_cell);
         }
     }
 }

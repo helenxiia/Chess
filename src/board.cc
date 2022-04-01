@@ -1,5 +1,9 @@
 #include "board.h"
+
+#include "cell.h"
 #include "move.h"
+#include "player.h"
+#include "piece.h"
 
 using namespace std;
 
@@ -7,8 +11,8 @@ using namespace std;
 map<int, float> Board::score = map<int, float>();
 
 // constructor
-Board::Board() : the_board{vector<vector<Cell*>>()}, previous_moves{vector<Move*>()}, 
-                    pieces{vector<Piece*>()}, players{vector<Player*>()}, turn{0}, currently_playing{true} {}
+Board::Board() : the_board{vector<vector<unique_ptr<Cell>>>()}, previous_moves{vector<unique_ptr<Move>>()}, 
+                    pieces{vector<unique_ptr<Piece>>()}, players{vector<unique_ptr<Player>>()}, turn{0}, currently_playing{true} {}
 
 // destructor
 Board::~Board() { /* delete pointers probably */ } 
@@ -26,7 +30,7 @@ void Board::modify_score(int player, float point) {
 // run the game
 void Board::run() {
     while(currently_playing) { // while game is playing
-        Player *cur_player = players.at(turn); // get which player is playing, based on the turn
+        Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
         try {
             // ---- NEED CLASSES TO BE DEFINED ---- //
             // WE MAY NEED A COPY CONSTRUCTOR HERE

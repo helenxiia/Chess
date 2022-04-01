@@ -1,6 +1,8 @@
 #ifndef CHESS_H_
 #define CHESS_H_
 
+#include <memory>
+
 #include "board.h"
 
 class Chess : public Board {
