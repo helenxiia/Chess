@@ -4,7 +4,7 @@
 using namespace std;
 
 // constructor
-Chess::Chess() : checkmate{-1}, check{-1}, stalemate{false} {}
+Chess::Chess() : Board{}, check{-1}, stalemate{false} {}
 
 // destructor
 Chess::~Chess() {}

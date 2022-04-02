@@ -1,39 +1,37 @@
 #include <memory>
 #include <vector>
 #include "piece.h"
+
 using namespace std;
 
-// Piece::Piece(unique_ptr<Cell> cell, 
-//             int color, 
-//             int value, 
-//             vector<unique_ptr<Cell>> valid_moves, string name): 
-//             cell{cell}, color{color}, value{value},
-//             valid_moves{valid_moves}, name{name} {
-//                 is_taken = false;
-//                 has_not_moved = true;
-//                 status = 0;
-//                 is_taken = false;
-//             }
+// Piece::Piece(Cell *cell, int color 
+//             // int value, vector<unique_ptr<Cell>> valid_moves, string name
+//             ) : 
+//             cell{cell}, color{color}, 
+//             // value{value}, valid_moves{valid_moves}, name{name} 
+//             is_taken{false}, has_not_moved{true} {}
 
-// void Piece::set_cell(unique_ptr<Cell> cell) {
-//     this->cell = cell;
-//     this->cell->notify();
-// }
+Piece::Piece(Cell *cell, int color) : cell{cell}, color{color}, is_taken{false}, has_not_moved{true} {}
 
-// std::unique_ptr<Cell> get_cell() {
-//     return this->cell;
-// }
+void Piece::set_cell(Cell *cell) {
+    cell = cell;
+    // this->cell->notify();
+}
 
-// int Piece::get_color() { return color; }
+Cell* Piece::get_cell() {
+    return cell;
+}
+
+int Piece::get_color() { return color; }
 
 // int Piece::get_value() { return value; }
 
 // string Piece::get_name() { return name; }
 
-// void Piece::set_is_taken() {
-//     is_taken = true;
+void Piece::set_is_taken() {
+    is_taken = true;
     
-// }
+}
 
 // int Piece::get_status() { return status; }
 

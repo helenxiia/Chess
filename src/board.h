@@ -43,7 +43,7 @@ class Board {
   public:
     // constructor and destructor
     Board();
-    virtual ~Board();
+    virtual ~Board() = 0;
     // initialize the board as needed
     virtual void init() = 0; 
     // get reference to the board
