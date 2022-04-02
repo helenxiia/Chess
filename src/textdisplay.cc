@@ -1,5 +1,6 @@
 #include "textdisplay.h"
 #include "cell.h"
+#include "piece.h"
 
 using namespace std;
 
@@ -27,15 +28,17 @@ void TextDisplay::print_board(const string &gametype) {
             cout << " " << i << " ";
             for (int j = 0; j < 8; ++j) {
                 auto cell = gameboard[i][j];
-                cout << "|";
+                cout << "| ";
                 if (cell->get_piece() == nullptr) {
                     if ((i + j) % 2 == 0) {
-                        cout << " " << "\u25A0" << " ";
+                        cout << "\u25A0";
                     } else {
-                        cout << " " << "\u25A1" << " ";
+                        cout << "\u25A1";
                     }
+                } else {
+                    cell->get_piece()->print();
                 }
-                cout << "|";
+                cout << " |";
             }
             cout << endl;
         }

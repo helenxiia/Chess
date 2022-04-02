@@ -5,7 +5,8 @@
 
 class Bishop : public Piece {
   public:
-    Bishop(Cell *cell, int color);
+    Bishop(int color);
+    ~Bishop();
     void print();
 };
 

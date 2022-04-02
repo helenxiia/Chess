@@ -3,7 +3,10 @@
 using namespace std;
 
 // constructor
-Bishop::Bishop(Cell *cell, int color) : Piece{cell, color} {}
+Bishop::Bishop(int color) : Piece{color} {}
+
+// destructor
+Bishop::~Bishop() {}
 
 // print
 void Bishop::print() {

@@ -40,6 +40,7 @@ class Board {
     void set_board(int row, int col);
     TextDisplay *get_td();
     int get_players_size();
+    void set_piece(int row, int col, Piece *piece);
   public:
     // constructor and destructor
     Board();

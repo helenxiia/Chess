@@ -11,10 +11,12 @@ using namespace std;
 //             // value{value}, valid_moves{valid_moves}, name{name} 
 //             is_taken{false}, has_not_moved{true} {}
 
-Piece::Piece(Cell *cell, int color) : cell{cell}, color{color}, is_taken{false}, has_not_moved{true} {}
+Piece::Piece(int color) : cell{nullptr}, color{color}, is_taken{false}, has_not_moved{true} {}
 
-void Piece::set_cell(Cell *cell) {
-    cell = cell;
+Piece::~Piece() {}
+
+void Piece::set_cell(Cell *c) {
+    cell = c;
     // this->cell->notify();
 }
 

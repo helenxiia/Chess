@@ -16,8 +16,8 @@ class Piece {
     bool has_not_moved;
   public:
     // Piece(Cell *cell, int color, int value, std::vector<std::unique_ptr<Cell>> valid_moves, std::string name);
-    Piece(Cell *cell, int color);
-    virtual ~Piece() = 0;
+    Piece(int color);
+    virtual ~Piece();
     Cell *get_cell();
     void set_cell(Cell *cell);
     int get_color();
@@ -25,7 +25,7 @@ class Piece {
     void set_is_taken();
     // bool valid_move(std::unique_ptr<Cell>);
     int get_status();
-    virtual void create_valid_moves() = 0;
+    // virtual void create_valid_moves() = 0;
     // print out piece
     virtual void print() = 0;
 };

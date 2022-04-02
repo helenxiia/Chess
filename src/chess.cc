@@ -1,5 +1,5 @@
 #include "chess.h"
-#include "cell.h"
+#include "bishop.h"
 
 using namespace std;
 
@@ -13,6 +13,7 @@ Chess::~Chess() {}
 void Chess::init() {
     // set the_board to an 8x8
     set_board(8, 8);
+    set_piece(0, 0, new Bishop(0));
     TextDisplay *text_display = get_td();
     text_display->print_board("chess");
 }

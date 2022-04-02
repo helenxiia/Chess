@@ -41,6 +41,13 @@ int Board::get_players_size() {
     return (int) players.size();
 }
 
+// set piece on board
+void Board::set_piece(int row, int col, Piece *piece) {
+    Cell *cell = the_board[row][col].get();
+    cell->set_piece(piece);
+    piece->set_cell(cell);
+}
+
 // get reference to board
 vector<vector<Cell*>> Board::get_ref_board() {
     vector<vector<Cell*>> ref_board;
