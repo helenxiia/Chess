@@ -8,7 +8,7 @@ TextDisplay::TextDisplay(Board *board) : board{board} {}
 
 // print out the board
 void TextDisplay::print_board(const string &gametype) {
-    vector<vector<Cell*>> gameboard = board->get_board();
+    vector<vector<Cell*>> gameboard = board->get_ref_board();
     if (gametype == "chess") { // if chess game
         // print out the column names
         cout << "   "; // padding

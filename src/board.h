@@ -19,7 +19,6 @@ class Player;
 class TextDisplay;
 
 class Board {
-  protected:
     // board that the game is being played on
     std::vector<std::vector<std::unique_ptr<Cell>>> the_board; 
     // vector of previous moves made during the game
@@ -36,15 +35,19 @@ class Board {
     bool currently_playing; 
     // maps player to their current score
     static std::map<int, float> score; 
-    TextDisplay *td;
+    std::unique_ptr<TextDisplay> td;
+  protected:
+    void set_board(int row, int col);
+    TextDisplay *get_td();
+    int get_players_size();
   public:
     // constructor and destructor
     Board();
-    ~Board();
+    virtual ~Board();
     // initialize the board as needed
     virtual void init() = 0; 
-    // get the board
-    std::vector<std::vector<Cell*>> get_board();
+    // get reference to the board
+    std::vector<std::vector<Cell*>> get_ref_board();
     // create the players
     virtual void create_players(std::vector<std::string> player_names) = 0;
     // returns whether or not the game is over

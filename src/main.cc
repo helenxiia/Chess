@@ -32,4 +32,6 @@ int main() {
             chess_game->setup(); // call setup
         }
     }
+
+    delete chess_game;
 }

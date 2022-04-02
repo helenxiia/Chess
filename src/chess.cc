@@ -12,15 +12,9 @@ Chess::~Chess() {}
 // initialize a chess board
 void Chess::init() {
     // set the_board to an 8x8
-    for (int i = 0; i < 8; ++i) {
-        vector<unique_ptr<Cell>> row;
-        for (int j = 0; j < 8; ++j) {
-            // create new cells
-            row.emplace_back(unique_ptr<Cell>{new Cell(i, j)});
-        }
-        the_board.emplace_back(move(row));
-    }
-    td->print_board("chess");
+    set_board(8, 8);
+    TextDisplay *text_display = get_td();
+    text_display->print_board("chess");
 }
 
 // create players
@@ -32,7 +26,7 @@ void Chess::create_players(vector<string> player_names) {
 bool Chess::game_over() {
     if (checkmate != -1) { // checkmate
         // NOT SURE IF THIS IS HOW MULTIPLAYER CHESS POINTS WORK
-        for (int i = 0; i < (int) players.size(); ++i) {
+        for (int i = 0; i < get_players_size(); ++i) {
             if (i != checkmate) { // not the player that got checkmated
                 modify_score(i, 1); // add 1 to score
             }
@@ -40,7 +34,7 @@ bool Chess::game_over() {
         return true;
     } else if (stalemate) { // stalemate
         // NOT SURE IF THIS IS HOW MULTIPLAYER CHESS POINTS WORK
-        for (int i = 0; i < (int) players.size(); ++i) {
+        for (int i = 0; i < get_players_size(); ++i) {
             modify_score(i, 0.5); // everyone gets half a point
         }
         return true;
