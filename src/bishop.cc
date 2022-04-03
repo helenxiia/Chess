@@ -11,8 +11,8 @@ Bishop::~Bishop() {}
 // print
 void Bishop::print() {
     if (get_color()) {
-        cout << "B";
-    } else {
         cout << "b";
+    } else {
+        cout << "B";
     }
 }

@@ -1,5 +1,10 @@
 #include "chess.h"
+#include "pawn.h"
 #include "bishop.h"
+#include "knight.h"
+#include "rook.h"
+#include "queen.h"
+#include "king.h"
 
 #include "human.h"
 
@@ -15,7 +20,34 @@ Chess::~Chess() {}
 void Chess::init() {
     // set the_board to an 8x8
     set_board(8, 8);
-    set_piece(0, 0, new Bishop(0));
+    // set pawns
+    for (int i = 0; i < 8; ++i) { // white
+        set_piece(6, i, new Pawn(0));
+    }
+    for (int i = 0; i < 8; ++i) { // black
+        set_piece(1, i, new Pawn(1));
+    }
+    // set bishops
+    set_piece(7, 2, new Bishop(0)); // white
+    set_piece(7, 5, new Bishop(0)); // white
+    set_piece(0, 2, new Bishop(1)); // black
+    set_piece(0, 5, new Bishop(1)); // black
+    // set knights
+    set_piece(7, 1, new Knight(0)); // white
+    set_piece(7, 6, new Knight(0)); // white
+    set_piece(0, 1, new Knight(1)); // black
+    set_piece(0, 6, new Knight(1)); // black
+    // set rooks
+    set_piece(7, 0, new Rook(0)); // white
+    set_piece(7, 7, new Rook(0)); // white
+    set_piece(0, 0, new Rook(1)); // black
+    set_piece(0, 7, new Rook(1)); // black
+    // set queens
+    set_piece(7, 3, new Queen(0)); // white
+    set_piece(0, 3, new Queen(1)); // black
+    // set king
+    set_piece(7, 4, new King(0)); // white
+    set_piece(0, 4, new King(1)); // black
     TextDisplay *text_display = get_td();
     text_display->print_board("chess");
 }

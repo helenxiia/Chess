@@ -35,10 +35,10 @@ void Human::make_move() {
             iss >> pos1;
             iss >> pos2;
             int coli = pos1[0] - letter_off_set - 1;
-            int rowi = stoi(pos1.substr(1)) - 1;
+            int rowi = 8 - stoi(pos1.substr(1));
 
             int colf = pos2[0] - letter_off_set - 1;
-            int rowf = stoi(pos2.substr(1)) - 1;
+            int rowf = 8 - stoi(pos2.substr(1));
 
             try {
                 if (coli == colf && rowi == rowf) throw out_of_range("Invalid Move");

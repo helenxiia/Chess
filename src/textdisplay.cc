@@ -25,7 +25,7 @@ void TextDisplay::print_board(const string &gametype) {
             }
             cout << endl;
             // print out row name
-            cout << " " << i + 1 << " ";
+            cout << " " << 8 - i << " ";
             for (int j = 0; j < 8; ++j) {
                 auto cell = gameboard[i][j];
                 cout << "| ";
