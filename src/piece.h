@@ -23,14 +23,13 @@ class Piece {
     int get_color();
     int get_value();
     void set_is_taken();
-    // bool valid_move(std::unique_ptr<Cell>);
+    // bool valid_move(Cell* cell);
     int get_status();
     int get_id();
     void set_id(int i);
     // virtual void create_valid_moves() = 0;
     // print out piece
     virtual void print() = 0;
-    // increment id_num
 };
 
 #endif

@@ -22,7 +22,7 @@ class Chess : public Board {
     // setup the chess board
     void setup();
     // Chess must observe its Pieces for check, checkmate, stalemate
-    void notify();
+    // void notify();
     // get winner
     void get_winner(int lose);
     // print score

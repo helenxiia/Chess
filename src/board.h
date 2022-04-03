@@ -35,6 +35,7 @@ class Board {
     bool currently_playing; 
     // maps player to their current score
     static std::map<int, float> score; 
+    // points to a text display object
     std::unique_ptr<TextDisplay> td;
     // rest the board
     void reset();
@@ -52,12 +53,12 @@ class Board {
     TextDisplay *get_td();
     // get number of players
     int get_players_size();
+    // add a player to the game
+    void add_player(Player *player);
     // set a piece at a cell
     void set_piece(int row, int col, Piece *piece);
     // get piece using id
     Piece *get_piece(int id);
-    // add a player to the game
-    void add_player(Player *player);
   public:
     // constructor and destructor
     Board();
@@ -65,7 +66,7 @@ class Board {
     // get reference to the board
     std::vector<std::vector<Cell*>> get_ref_board();
     // Board observes Piece
-    virtual void notify() = 0;
+    // virtual void notify() = 0;
     // edit the score board
     static void modify_score(int player, float point);
     // get a score

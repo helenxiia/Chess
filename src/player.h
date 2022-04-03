@@ -19,10 +19,10 @@ class Player {
     // move piece
     virtual std::vector<int> make_move() = 0;
   public:
-    void set_board(Board *b);
-    Board *get_board();
     Player(int side);
     virtual ~Player();
+    void set_board(Board *b);
+    Board *get_board();
     std::vector<int> move();
     // get and set resign
     void set_resign();

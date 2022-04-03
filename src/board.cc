@@ -41,6 +41,12 @@ int Board::get_players_size() {
     return (int) players.size();
 }
 
+// add player
+void Board::add_player(Player *player) {
+    player->set_board(this);
+    players.emplace_back(unique_ptr<Player>{player});
+}
+
 // set piece on board
 void Board::set_piece(int row, int col, Piece *piece) {
     Cell *cell = the_board[row][col].get();
@@ -62,12 +68,6 @@ Piece* Board::get_piece(int id) {
         }
     } 
     return nullptr;
-}
-
-// add player
-void Board::add_player(Player *player) {
-    player->set_board(this);
-    players.emplace_back(unique_ptr<Player>{player});
 }
 
 // get reference to board
