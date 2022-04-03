@@ -41,11 +41,12 @@ void Human::make_move() {
             int rowf = 8 - stoi(pos2.substr(1));
 
             try {
-                if (coli == colf && rowi == rowf) throw out_of_range("Invalid Move");
+                if (coli == colf && rowi == rowf) throw out_of_range("Cannot Move To Same Cell");
 
                 // we also need to know what piece is moving 
                 Piece *p = cur_board.at(rowi).at(coli)->get_piece();
-                if (p == nullptr) throw out_of_range("Invalid Move");
+                if (p == nullptr) throw out_of_range("Cell Has No Piece");
+                if (!own(p)) throw out_of_range("You Do Not Own That Piece");
 
                 // removes the piece from the board in the specific cell
                 cur_board.at(rowi).at(coli)->remove_piece();
@@ -54,13 +55,13 @@ void Human::make_move() {
                 cur_board.at(rowf).at(colf)->set_piece(p);
                 break;
             } catch (const out_of_range &r) {
-                cerr << "Invalid Move" << endl;
+                cerr << "Invalid Move: " << r.what() << endl;
             }
         } else if (command == "resign") {
             set_resign();
             break;
         } else {
-            cerr << "Invalid Move" << endl;
+            cerr << "Invalid Move: Please Enter Instruction 'move (row1, col1) (row2,col2)'" << endl;
         }
     }
 }

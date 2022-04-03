@@ -32,7 +32,6 @@ int Piece::get_color() { return color; }
 
 void Piece::set_is_taken() {
     is_taken = true;
-    
 }
 
 // int Piece::get_status() { return status; }

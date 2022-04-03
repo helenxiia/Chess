@@ -49,6 +49,8 @@ void Board::set_piece(int row, int col, Piece *piece) {
     // add to pieces
     auto p = unique_ptr<Piece>{piece};
     pieces.emplace_back(move(p));
+    // add to player
+    players.at(piece->get_color())->add_piece(piece);
 }
 
 // add player
@@ -108,10 +110,10 @@ void Board::reset() {
 // run the game
 void Board::run(vector<string> player_names) {
     currently_playing = true;
-    // initialize board
-    init();
     // make players
     create_players(player_names);
+    // initialize board
+    init();
     // initialize score
     for (int i = 0; i < get_players_size(); ++i) {
         if (score.count(i) == 0) {

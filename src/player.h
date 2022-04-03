@@ -18,7 +18,7 @@ class Player {
     bool resign;
     // move piece
     virtual void make_move() = 0;
-    public:
+  public:
     void set_board(Board *b);
     Board *get_board();
     Player(int side);
@@ -28,6 +28,12 @@ class Player {
     void set_resign();
     bool get_resign();
     // void notify();
+    // add piece
+    void add_piece(Piece *piece);
+    // get pieces
+    std::vector<Piece*> get_pieces();
+    // check if piece is owned
+    bool own(Piece *piece);
 };
 
 #endif

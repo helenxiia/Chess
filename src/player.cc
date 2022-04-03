@@ -3,7 +3,7 @@
 #include "player.h"
 #include <memory>
 #include <stdio.h>
-#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -36,4 +36,22 @@ void Player::set_resign() {
 // get resign value
 bool Player::get_resign() {
     return resign;
+}
+
+// add piece
+void Player::add_piece(Piece *piece) {
+    owned_pieces.emplace_back(piece);
+}
+
+// get pieces
+vector<Piece*> Player::get_pieces() {
+    return owned_pieces;
+}
+
+// check if player owns a piece
+bool Player::own(Piece *piece) {
+    if (count(owned_pieces.begin(), owned_pieces.end(), piece)) {
+        return true;
+    }
+    return false;
 }
