@@ -48,6 +48,12 @@ void Board::set_piece(int row, int col, Piece *piece) {
     piece->set_cell(cell);
 }
 
+// add player
+void Board::add_player(Player *player) {
+    player->set_board(this);
+    players.emplace_back(unique_ptr<Player>{player});
+}
+
 // get reference to board
 vector<vector<Cell*>> Board::get_ref_board() {
     vector<vector<Cell*>> ref_board;
@@ -84,6 +90,7 @@ void Board::run() {
             // THIS INCREASES COUPLING THO
             // Move move = cur_player->make_move(); 
             // previous_moves.emplace_back(move);
+            cur_player->make_move();
 
             // increment turn
             if (turn == (int) players.size() - 1) { // it is last player's turn
@@ -93,7 +100,8 @@ void Board::run() {
             }
             // increment count
             ++count;
-
+            // display
+            td->print_board("chess");
             // create move
             // Move *move  = new Move();
             // previous_moves.emplace_back(move);

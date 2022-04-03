@@ -1,6 +1,8 @@
 #include "chess.h"
 #include "bishop.h"
 
+#include "human.h"
+
 using namespace std;
 
 // constructor
@@ -20,7 +22,13 @@ void Chess::init() {
 
 // create players
 void Chess::create_players(vector<string> player_names) {
-
+    int side = 0;
+    for (auto player : player_names) {
+        if (player == "human") {
+            Human *new_player = new Human(side);
+            add_player(new_player);
+        }
+    }
 }
 
 // check if game is over

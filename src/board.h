@@ -41,6 +41,7 @@ class Board {
     TextDisplay *get_td();
     int get_players_size();
     void set_piece(int row, int col, Piece *piece);
+    void add_player(Player *player);
   public:
     // constructor and destructor
     Board();
