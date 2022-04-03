@@ -17,7 +17,7 @@ class Cell {
     Cell(int row, int col);
     ~Cell();
     Piece* get_piece(); // gets piece
-    void set_piece(Piece *piece); // sets piece
+    void set_piece(Piece *p); // sets piece
     void remove_piece(); // removes piece, only used in setup mode
     int get_row(); // gets row
     int get_col(); // gets col

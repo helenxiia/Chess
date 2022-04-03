@@ -14,13 +14,48 @@ map<int, float> Board::score = map<int, float>();
 // constructor
 Board::Board() : the_board{vector<vector<unique_ptr<Cell>>>()}, previous_moves{vector<unique_ptr<Move>>()}, 
                     pieces{vector<unique_ptr<Piece>>()}, players{vector<unique_ptr<Player>>()}, turn{0}, currently_playing{true},
-                    td{new TextDisplay(this)} {}
+                    td{unique_ptr<TextDisplay>{new TextDisplay(this)}} {}
 
 // destructor
-Board::~Board() { /* delete pointers probably */ } 
+Board::~Board() {} 
+
+// set board
+void Board::set_board(int row, int col) {
+    for (int i = 0; i < row; ++i) {
+        vector<unique_ptr<Cell>> line;
+        for (int j = 0; j < col; ++j) {
+            // create new cells
+            line.emplace_back(unique_ptr<Cell>{new Cell(i, j)});
+        }
+        the_board.emplace_back(move(line));
+    }
+}
+
+// get text display
+TextDisplay *Board::get_td() {
+    return td.get();
+}
+
+// get number of players
+int Board::get_players_size() {
+    return (int) players.size();
+}
+
+// set piece on board
+void Board::set_piece(int row, int col, Piece *piece) {
+    Cell *cell = the_board[row][col].get();
+    cell->set_piece(piece);
+    piece->set_cell(cell);
+}
+
+// add player
+void Board::add_player(Player *player) {
+    player->set_board(this);
+    players.emplace_back(unique_ptr<Player>{player});
+}
 
 // get reference to board
-vector<vector<Cell*>> Board::get_board() {
+vector<vector<Cell*>> Board::get_ref_board() {
     vector<vector<Cell*>> ref_board;
     for (int i = 0; i < (int) the_board.size(); ++i) {
             vector<Cell*> ref_row;
@@ -55,6 +90,7 @@ void Board::run() {
             // THIS INCREASES COUPLING THO
             // Move move = cur_player->make_move(); 
             // previous_moves.emplace_back(move);
+            cur_player->make_move();
 
             // increment turn
             if (turn == (int) players.size() - 1) { // it is last player's turn
@@ -64,7 +100,8 @@ void Board::run() {
             }
             // increment count
             ++count;
-
+            // display
+            td->print_board("chess");
             // create move
             // Move *move  = new Move();
             // previous_moves.emplace_back(move);

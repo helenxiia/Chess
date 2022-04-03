@@ -1,4 +1,5 @@
 #include "cell.h"
+#include "piece.h"
 
 using namespace std;
 
@@ -14,8 +15,8 @@ Piece* Cell::get_piece() {
 }
 
 // set piece on Cell
-void Cell::set_piece(Piece *piece) {
-    piece = piece;
+void Cell::set_piece(Piece *p) {
+    piece = p;
 }
 
 // removes Piece from Cell

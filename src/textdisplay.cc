@@ -1,5 +1,6 @@
 #include "textdisplay.h"
 #include "cell.h"
+#include "piece.h"
 
 using namespace std;
 
@@ -8,7 +9,7 @@ TextDisplay::TextDisplay(Board *board) : board{board} {}
 
 // print out the board
 void TextDisplay::print_board(const string &gametype) {
-    vector<vector<Cell*>> gameboard = board->get_board();
+    vector<vector<Cell*>> gameboard = board->get_ref_board();
     if (gametype == "chess") { // if chess game
         // print out the column names
         cout << "   "; // padding
@@ -24,18 +25,20 @@ void TextDisplay::print_board(const string &gametype) {
             }
             cout << endl;
             // print out row name
-            cout << " " << i << " ";
+            cout << " " << 8 - i << " ";
             for (int j = 0; j < 8; ++j) {
                 auto cell = gameboard[i][j];
-                cout << "|";
+                cout << "| ";
                 if (cell->get_piece() == nullptr) {
                     if ((i + j) % 2 == 0) {
-                        cout << " " << "\u25A0" << " ";
+                        cout << "\u25A0";
                     } else {
-                        cout << " " << "\u25A1" << " ";
+                        cout << "\u25A1";
                     }
+                } else {
+                    cell->get_piece()->print();
                 }
-                cout << "|";
+                cout << " |";
             }
             cout << endl;
         }
