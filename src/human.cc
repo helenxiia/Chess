@@ -56,6 +56,11 @@ void Human::make_move() {
             } catch (const out_of_range &r) {
                 cerr << "Invalid Move" << endl;
             }
+        } else if (command == "resign") {
+            set_resign();
+            break;
+        } else {
+            cerr << "Invalid Move" << endl;
         }
     }
 }

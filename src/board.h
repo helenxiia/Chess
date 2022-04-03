@@ -36,32 +36,44 @@ class Board {
     // maps player to their current score
     static std::map<int, float> score; 
     std::unique_ptr<TextDisplay> td;
+    // rest the board
+    void reset();
+    // private virtual members
+    // initialize the board as needed
+    virtual void init() = 0; 
+    // create the players
+    virtual void create_players(std::vector<std::string> player_names) = 0;
+    // returns whether or not the game is over
+    virtual bool game_over() = 0; 
   protected:
+    // set the board to a specific length and width
     void set_board(int row, int col);
+    // get the text display object
     TextDisplay *get_td();
+    // get number of players
     int get_players_size();
+    // set a piece at a cell
     void set_piece(int row, int col, Piece *piece);
+    // add a player to the game
     void add_player(Player *player);
   public:
     // constructor and destructor
     Board();
     virtual ~Board() = 0;
-    // initialize the board as needed
-    virtual void init() = 0; 
     // get reference to the board
     std::vector<std::vector<Cell*>> get_ref_board();
-    // create the players
-    virtual void create_players(std::vector<std::string> player_names) = 0;
-    // returns whether or not the game is over
-    virtual bool game_over() = 0; 
     // Board observes Piece
     virtual void notify() = 0;
     // edit the score board
     static void modify_score(int player, float point);
+    // get a score
+    static int get_score(int player);
+    // return if a player resigned
+    int resign();
     // setup mode
     virtual void setup() = 0;
     // run the game
-    void run(); 
+    void run(std::vector<std::string> player_names); 
 };
 
 #endif

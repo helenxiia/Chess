@@ -31,9 +31,11 @@ void TextDisplay::print_board(const string &gametype) {
                 cout << "| ";
                 if (cell->get_piece() == nullptr) {
                     if ((i + j) % 2 == 0) {
-                        cout << "\u25A0";
+                        // cout << "\u25A0";
+                        cout << " ";
                     } else {
-                        cout << "\u25A1";
+                        // cout << "\u25A1";
+                        cout << " ";
                     }
                 } else {
                     cell->get_piece()->print();

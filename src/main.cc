@@ -24,14 +24,14 @@ int main() {
             while (ss >> player) {
                 player_names.emplace_back(player);
             }
-            chess_game->init(); // initalize
-            chess_game->create_players(player_names); // create players
-            chess_game->run(); // run game
+            chess_game->run(player_names); // run game
         } else if (cmd == "setup") {
             // setup mode
             chess_game->setup(); // call setup
+        } else if (cmd == "exit") {
+            break;
         }
     }
-
+    chess_game->print_score();
     delete chess_game;
 }

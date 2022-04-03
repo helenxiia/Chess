@@ -23,6 +23,10 @@ class Chess : public Board {
     void setup();
     // Chess must observe its Pieces for check, checkmate, stalemate
     void notify();
+    // get winner
+    void get_winner(int lose);
+    // print score
+    static void print_score();
 };
 
 #endif

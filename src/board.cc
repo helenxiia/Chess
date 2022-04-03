@@ -46,6 +46,9 @@ void Board::set_piece(int row, int col, Piece *piece) {
     Cell *cell = the_board[row][col].get();
     cell->set_piece(piece);
     piece->set_cell(cell);
+    // add to pieces
+    auto p = unique_ptr<Piece>{piece};
+    pieces.emplace_back(move(p));
 }
 
 // add player
@@ -78,19 +81,55 @@ void Board::modify_score(int player, float point) {
     }
 }
 
+// get a score
+int Board::get_score(int player) {
+    return score.at(player);
+}
+
+// player resigned
+int Board::resign() {
+    for (int i = 0; i < (int) players.size(); ++i) {
+        if (players.at(i)->get_resign()) return i; 
+    }
+    return -1;
+}
+
+// reset the game
+void Board::reset() {
+    the_board.clear();
+    previous_moves.clear();
+    pieces.clear();
+    players.clear();
+    currently_playing = false;
+    turn = 0;
+    count = 0;
+}
+
 // run the game
-void Board::run() {
+void Board::run(vector<string> player_names) {
+    currently_playing = true;
+    // initialize board
+    init();
+    // make players
+    create_players(player_names);
+    // initialize score
+    for (int i = 0; i < get_players_size(); ++i) {
+        if (score.count(i) == 0) {
+            modify_score(i, 0);
+        }
+    }
+    // run
     while(currently_playing) { // while game is playing
+        if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
         try {
-            // ---- NEED CLASSES TO BE DEFINED ---- //
-            // WE MAY NEED A COPY CONSTRUCTOR HERE
-            // SINCE I DON'T WANT TO DO THAT, LETS HAVE PLAYER RETURN A VECTOR WITH THE INFORMATION NEEDED FOR MOVE
-            // IE. LAST_PIECE, CURRENT_PIECE, INITIAL_CELL, FINAL_CELL
-            // THIS INCREASES COUPLING THO
-            // Move move = cur_player->make_move(); 
-            // previous_moves.emplace_back(move);
-            cur_player->make_move();
+            cur_player->move();
+
+            // check if game over
+            if (game_over()) {
+                reset();
+                break;
+            }
 
             // increment turn
             if (turn == (int) players.size() - 1) { // it is last player's turn

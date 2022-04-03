@@ -11,7 +11,7 @@
 using namespace std;
 
 // constructor
-Chess::Chess() : Board{}, check{-1}, stalemate{false} {}
+Chess::Chess() : Board{}, checkmate{-1}, check{-1}, stalemate{false} {}
 
 // destructor
 Chess::~Chess() {}
@@ -56,9 +56,11 @@ void Chess::init() {
 void Chess::create_players(vector<string> player_names) {
     int side = 0;
     for (auto player : player_names) {
-        if (player == "human") {
+        if (player == "human") { // Humane
             Human *new_player = new Human(side);
             add_player(new_player);
+        } else { // Computer
+
         }
     }
 }
@@ -72,14 +74,26 @@ bool Chess::game_over() {
                 modify_score(i, 1); // add 1 to score
             }
         }
+        get_winner(checkmate);
         return true;
     } else if (stalemate) { // stalemate
         // NOT SURE IF THIS IS HOW MULTIPLAYER CHESS POINTS WORK
         for (int i = 0; i < get_players_size(); ++i) {
             modify_score(i, 0.5); // everyone gets half a point
         }
+        cout << "Stalemate" << endl;
         return true;
     } else {
+        int res = resign();
+        if (res != -1) {
+            for (int i = 0; i < get_players_size(); ++i) {
+                if (i != res) { // not the player that got checkmated
+                    modify_score(i, 1); // add 1 to score
+                }
+            }
+            get_winner(res);
+            return true;
+        }
         return false;
     }
 }
@@ -87,6 +101,18 @@ bool Chess::game_over() {
 // notify Chess when piece moves
 void Chess::notify() {
 
+}
+
+// get winner
+void Chess::get_winner(int lose) {
+    switch(lose) {
+        case 0:
+            cout << "Black Won!" << endl;
+            break;
+        case 1:
+            cout << "White Won!" << endl;
+            break;
+    }
 }
 
 // setup chess board mode
@@ -108,4 +134,11 @@ void Chess::setup() {
             break;
         }
     }
+}
+
+// print scoreboard
+void Chess::print_score() {
+    cout << "Final Score:" << endl;
+    cout << "White: " << get_score(0) << endl;
+    cout << "Black: " << get_score(1) << endl;
 }
