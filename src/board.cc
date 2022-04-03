@@ -53,6 +53,17 @@ void Board::set_piece(int row, int col, Piece *piece) {
     players.at(piece->get_color())->add_piece(piece);
 }
 
+// get piece using id
+Piece* Board::get_piece(int id) {
+    if (id == -1) return nullptr;
+    for (auto &piece : pieces) {
+        if (piece->get_id() == id) {
+            return piece.get();
+        }
+    } 
+    return nullptr;
+}
+
 // add player
 void Board::add_player(Player *player) {
     player->set_board(this);
@@ -114,6 +125,10 @@ void Board::run(vector<string> player_names) {
     create_players(player_names);
     // initialize board
     init();
+    // assign id to pieces
+    for (int i = 0; i < (int) pieces.size(); ++i) {
+        pieces.at(i)->set_id(i);
+    }
     // initialize score
     for (int i = 0; i < get_players_size(); ++i) {
         if (score.count(i) == 0) {
@@ -125,13 +140,24 @@ void Board::run(vector<string> player_names) {
         if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
         try {
-            cur_player->move();
+            vector<int> move_info = cur_player->move();
+            if (move_info.size() == 0) { 
+                cout << "No Move Made" << endl; 
+                break;
+            }
 
             // check if game over
             if (game_over()) {
-                reset();
                 break;
             }
+
+            // create move
+            Piece *last_piece = get_piece(move_info[5]);
+            Piece *cur_piece = get_piece(move_info[4]);
+            Cell *init_cell = the_board.at(move_info[0]).at(move_info[1]).get();
+            Cell *fini_cell = the_board.at(move_info[2]).at(move_info[3]).get();
+            Move *move  = new Move(last_piece, cur_piece, init_cell, fini_cell, count);
+            previous_moves.emplace_back(unique_ptr<Move>{move});
 
             // increment turn
             if (turn == (int) players.size() - 1) { // it is last player's turn
@@ -143,11 +169,13 @@ void Board::run(vector<string> player_names) {
             ++count;
             // display
             td->print_board("chess");
-            // create move
-            // Move *move  = new Move();
-            // previous_moves.emplace_back(move);
         } catch (...) { // probably should define some error here
             // throw invalid move
         }
     }
+    cout << "End Of Game!" << endl;
+    for (auto &move : previous_moves) {
+        move->print();
+    }
+    reset();
 }

@@ -9,6 +9,6 @@ Computer::Computer(int side) : Player{side} {}
 // destructor
 Computer::~Computer() {}
 
-void Computer::make_move() {
-    
+vector<int> Computer::make_move() {
+    return vector<int>();
 }

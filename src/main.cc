@@ -24,7 +24,11 @@ int main() {
             while (ss >> player) {
                 player_names.emplace_back(player);
             }
-            chess_game->run(player_names); // run game
+            if (player_names.size() != 2) {
+                cerr << "Playing Chess - Please Enter Two Players" << endl;
+            } else {
+                chess_game->run(player_names); // run game
+            }
         } else if (cmd == "setup") {
             // setup mode
             chess_game->setup(); // call setup

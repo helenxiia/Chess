@@ -54,6 +54,8 @@ class Board {
     int get_players_size();
     // set a piece at a cell
     void set_piece(int row, int col, Piece *piece);
+    // get piece using id
+    Piece *get_piece(int id);
     // add a player to the game
     void add_player(Player *player);
   public:

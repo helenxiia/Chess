@@ -20,6 +20,9 @@ Chess::~Chess() {}
 void Chess::init() {
     // set the_board to an 8x8
     set_board(8, 8);
+    // set king
+    set_piece(7, 4, new King(0)); // white
+    set_piece(0, 4, new King(1)); // black
     // set pawns
     for (int i = 0; i < 8; ++i) { // white
         set_piece(6, i, new Pawn(0));
@@ -45,9 +48,6 @@ void Chess::init() {
     // set queens
     set_piece(7, 3, new Queen(0)); // white
     set_piece(0, 3, new Queen(1)); // black
-    // set king
-    set_piece(7, 4, new King(0)); // white
-    set_piece(0, 4, new King(1)); // black
     TextDisplay *text_display = get_td();
     text_display->print_board("chess");
 }

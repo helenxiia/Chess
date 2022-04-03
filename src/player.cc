@@ -24,8 +24,8 @@ Board *Player::get_board() {
 }
 
 // move
-void Player::move() {
-    make_move();
+vector<int> Player::move() {
+    return make_move();
 }
 
 // set resign to true

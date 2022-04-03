@@ -8,7 +8,7 @@ class Computer : public Player {
     public:
     Computer(int side);
     ~Computer();
-    void make_move(); 
+    std::vector<int> make_move(); 
 
 };
 #endif

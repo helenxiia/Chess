@@ -17,13 +17,13 @@ class Player {
     // whether or not they resigned
     bool resign;
     // move piece
-    virtual void make_move() = 0;
+    virtual std::vector<int> make_move() = 0;
   public:
     void set_board(Board *b);
     Board *get_board();
     Player(int side);
     virtual ~Player();
-    void move();
+    std::vector<int> move();
     // get and set resign
     void set_resign();
     bool get_resign();
