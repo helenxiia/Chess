@@ -98,11 +98,6 @@ bool Chess::game_over() {
     }
 }
 
-// notify Chess when piece moves
-void Chess::notify() {
-
-}
-
 // get winner
 void Chess::get_winner(int lose) {
     switch(lose) {
