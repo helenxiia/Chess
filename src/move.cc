@@ -23,4 +23,5 @@ void Move::print() {
     cout << " " << current_piece->get_id() << endl;
     cout << "Initial Cell: " << initial_cell->get_row() << " " << initial_cell->get_col() << endl;
     cout << "Final Cell: " << final_cell->get_row() << " " << final_cell->get_col() << endl;
+    cout << endl;
 }

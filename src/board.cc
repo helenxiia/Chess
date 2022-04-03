@@ -13,8 +13,8 @@ map<int, float> Board::score = map<int, float>();
 
 // constructor
 Board::Board() : the_board{vector<vector<unique_ptr<Cell>>>()}, previous_moves{vector<unique_ptr<Move>>()}, 
-                    pieces{vector<unique_ptr<Piece>>()}, players{vector<unique_ptr<Player>>()}, turn{0}, currently_playing{true},
-                    td{unique_ptr<TextDisplay>{new TextDisplay(this)}} {}
+                    pieces{vector<unique_ptr<Piece>>()}, players{vector<unique_ptr<Player>>()}, turn{0}, count{0}, 
+                    currently_playing{true}, td{unique_ptr<TextDisplay>{new TextDisplay(this)}} {}
 
 // destructor
 Board::~Board() {} 
