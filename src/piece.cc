@@ -11,7 +11,7 @@ using namespace std;
 //             // value{value}, valid_moves{valid_moves}, name{name} 
 //             is_taken{false}, has_not_moved{true} {}
 
-Piece::Piece(int color) : cell{nullptr}, color{color}, id{-1}, is_taken{false}, has_not_moved{true} {}
+Piece::Piece(int color, int value) : cell{nullptr}, color{color}, id{-1}, value{value}, is_taken{false}, has_not_moved{true} {}
 
 Piece::~Piece() {}
 
@@ -26,7 +26,7 @@ Cell* Piece::get_cell() {
 
 int Piece::get_color() { return color; }
 
-// int Piece::get_value() { return value; }
+int Piece::get_value() { return value; }
 
 // string Piece::get_name() { return name; }
 

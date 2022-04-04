@@ -59,18 +59,22 @@ class Board {
     void set_piece(int row, int col, Piece *piece);
     // get piece using id
     Piece *get_piece(int id);
+    // remove piece
+    void remove_piece(int row, int col);
+    // edit the score board
+    static void modify_score(int player, float point);
+    // get a score
+    static int get_score(int player);
+    // get size of score board
+    static int score_size();
+    // set turn
+    void set_turn(int color);
   public:
     // constructor and destructor
     Board();
     virtual ~Board() = 0;
     // get reference to the board
     std::vector<std::vector<Cell*>> get_ref_board();
-    // Board observes Piece
-    // virtual void notify() = 0;
-    // edit the score board
-    static void modify_score(int player, float point);
-    // get a score
-    static int get_score(int player);
     // return if a player resigned
     int resign();
     // setup mode

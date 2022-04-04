@@ -9,14 +9,14 @@ class Piece {
     Cell *cell;
     int color; // 0 is black 1 is white
     int id;
+    int value;
     bool is_taken;
-    // int value;
     // int status;
     // std::vector<std::unique_ptr<Cell>> valid_moves;
     bool has_not_moved;
   public:
     // Piece(Cell *cell, int color, int value, std::vector<std::unique_ptr<Cell>> valid_moves, std::string name);
-    Piece(int color);
+    Piece(int color, int value);
     virtual ~Piece();
     Cell *get_cell();
     void set_cell(Cell *cell);

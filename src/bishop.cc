@@ -3,7 +3,7 @@
 using namespace std;
 
 // constructor
-Bishop::Bishop(int color) : Piece{color} {}
+Bishop::Bishop(int color) : Piece{color, 4} {}
 
 // destructor
 Bishop::~Bishop() {}

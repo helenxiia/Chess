@@ -99,6 +99,16 @@ int Board::get_score(int player) {
     return score.at(player);
 }
 
+// get size of score
+int Board::score_size() {
+    return score.size();
+}
+
+// set turn
+void Board::set_turn(int color) {
+    turn = color;
+}
+
 // player resigned
 int Board::resign() {
     for (int i = 0; i < (int) players.size(); ++i) {
@@ -120,6 +130,8 @@ void Board::reset() {
 
 // run the game
 void Board::run(vector<string> player_names) {
+    // first reset game
+    reset();
     currently_playing = true;
     // make players
     create_players(player_names);
@@ -177,5 +189,4 @@ void Board::run(vector<string> player_names) {
     for (auto &move : previous_moves) {
         move->print();
     }
-    reset();
 }

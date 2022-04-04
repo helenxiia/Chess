@@ -3,7 +3,7 @@
 using namespace std;
 
 // constructor
-Rook::Rook(int color) : Piece{color} {}
+Rook::Rook(int color) : Piece{color, 5} {}
 
 // destructor
 Rook::~Rook() {}

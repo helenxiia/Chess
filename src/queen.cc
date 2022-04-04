@@ -3,7 +3,7 @@
 using namespace std;
 
 // constructor
-Queen::Queen(int color) : Piece{color} {}
+Queen::Queen(int color) : Piece{color, 9} {}
 
 // destructor
 Queen::~Queen() {}

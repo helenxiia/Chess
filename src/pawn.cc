@@ -3,7 +3,7 @@
 using namespace std;
 
 // constructor
-Pawn::Pawn(int color) : Piece{color} {}
+Pawn::Pawn(int color) : Piece{color, 1} {}
 
 // destructor
 Pawn::~Pawn() {}
