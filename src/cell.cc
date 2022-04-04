@@ -66,7 +66,28 @@ void Cell::notify() {
     // update threats
     threats.clear();
     for (auto piece : all_pieces) {
-        if (piece->valid_move(this)) { // piece can move to this cell
+        if (piece->get_value() == 1) { // check diagonals for pawns
+            if (piece->get_color() == 0) { // white
+                if (piece->get_cell()->get_row() == row + 1 && 
+                        (piece->get_cell()->get_col() == col - 1 || piece->get_cell()->get_col() == col + 1)) {
+                            if (threats.count(0)) {
+                                ++threats[0];
+                            } else {
+                                threats[0] = 1;
+                            }
+                        }
+            } else if (piece->get_color() == 1) { // black
+                if (piece->get_cell()->get_row() == row - 1 && 
+                        (piece->get_cell()->get_col() == col - 1 || piece->get_cell()->get_col() == col + 1)) {
+                            cout << "Cell: " << row << " " << col << endl;
+                            if (threats.count(1)) {
+                                ++threats[1];
+                            } else {
+                                threats[1] = 1;
+                            }
+                        }
+            }
+        } else if (piece->valid_move(this)) { // piece can move to this cell
             int col = piece->get_color();
             if (threats.count(col)) {
                 ++threats[col];
