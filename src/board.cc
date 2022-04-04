@@ -52,6 +52,7 @@ void Board::set_piece(int row, int col, Piece *piece) {
     Cell *cell = the_board[row][col].get();
     cell->set_piece(piece);
     piece->set_cell(cell);
+    piece->set_board(this);
     // add to pieces
     auto p = unique_ptr<Piece>{piece};
     pieces.emplace_back(move(p));
@@ -130,7 +131,7 @@ void Board::reset() {
 
 // run the game
 void Board::run(vector<string> player_names) {
-    // first reset game
+    // first reset game if needed
     reset();
     currently_playing = true;
     // make players

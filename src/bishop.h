@@ -8,6 +8,7 @@ class Bishop : public Piece {
     Bishop(int color);
     ~Bishop();
     void print();
+    void generate_moves();
 };
 
 #endif

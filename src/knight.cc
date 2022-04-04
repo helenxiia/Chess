@@ -16,3 +16,8 @@ void Knight::print() {
         cout << "N";
     }
 }
+
+// create valid moves
+void Knight::generate_moves() {
+
+}

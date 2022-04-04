@@ -8,6 +8,7 @@ class Queen : public Piece {
     Queen(int color);
     ~Queen();
     void print();
+    void generate_moves();
 };
 
 #endif

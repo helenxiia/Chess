@@ -16,3 +16,8 @@ void Rook::print() {
         cout << "R";
     }
 }
+
+// create valid moves
+void Rook::generate_moves() {
+
+}

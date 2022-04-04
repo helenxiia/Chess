@@ -38,7 +38,7 @@ void TextDisplay::print_board(const string &gametype) {
                         cout << " ";
                     }
                 } else {
-                    cell->get_piece()->print();
+                    cell->get_piece()->print_piece();
                 }
                 cout << " |";
             }

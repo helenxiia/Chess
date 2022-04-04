@@ -8,6 +8,7 @@ class Pawn : public Piece {
     Pawn(int color);
     ~Pawn();
     void print();
+    void generate_moves();
 };
 
 #endif

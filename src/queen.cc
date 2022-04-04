@@ -16,3 +16,8 @@ void Queen::print() {
         cout << "Q";
     }
 }
+
+// create valid moves
+void Queen::generate_moves() {
+
+}

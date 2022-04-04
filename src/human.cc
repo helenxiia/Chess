@@ -48,6 +48,10 @@ vector<int> Human::make_move() {
                 if (p == nullptr) throw out_of_range("Cell Has No Piece");
                 if (!own(p)) throw out_of_range("You Do Not Own That Piece");
 
+                // cell is valid move
+                Cell *c = cur_board.at(rowf).at(colf);
+                if (!p->valid_move(c)) throw out_of_range("Invalid Move For That Piece");
+
                 // removes the piece from the board in the specific cell
                 cur_board.at(rowi).at(coli)->remove_piece();
 

@@ -1,6 +1,8 @@
 #include <memory>
 #include <vector>
 #include "piece.h"
+#include "board.h"
+#include "cell.h"
 
 using namespace std;
 
@@ -28,8 +30,6 @@ int Piece::get_color() { return color; }
 
 int Piece::get_value() { return value; }
 
-// string Piece::get_name() { return name; }
-
 int Piece::get_id() { return id; }
 
 void Piece::set_id(int i) { id = i; }
@@ -40,15 +40,32 @@ void Piece::set_is_taken() {
 
 // int Piece::get_status() { return status; }
 
-// bool Piece::valid_move(unique_ptr<Cell> c) {
-//     for (int i = 0; i < valid_moves.size(); i++) {
-//         if (valid_moves[i] == c) {
-//             return true;
-//         }
-//     } return false;
-// }
+bool Piece::valid_move(Cell *cell) {
+    if (valid_moves.count(cell)) {
+        return true;
+    }
+    return false;
+}
 
+void Piece::print_piece() {
+    print();
+}
 
+void Piece::create_valid_moves() {
+    generate_moves();
+}
 
+// modify valid moves
+void Piece::modify_valid_moves(Cell *cell, int i) {
+    valid_moves[cell] = i;
+}
 
+// get the board
+Board *Piece::get_board() {
+    return board;
+}
 
+// set the board
+void Piece::set_board(Board *b) {
+    board = b;
+} 

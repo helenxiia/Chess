@@ -8,6 +8,7 @@ class Knight : public Piece {
     Knight(int color);
     ~Knight();
     void print();
+    void generate_moves();
 };
 
 #endif

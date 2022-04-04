@@ -16,3 +16,8 @@ void Pawn::print() {
         cout << "P";
     }
 }
+
+// create valid moves
+void Pawn::generate_moves() {
+
+}

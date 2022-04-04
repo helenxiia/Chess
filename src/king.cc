@@ -16,3 +16,8 @@ void King::print() {
         cout << "K";
     }
 }
+
+// create valid moves
+void King::generate_moves() {
+
+}
