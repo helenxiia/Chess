@@ -18,6 +18,6 @@ void Queen::print() {
 }
 
 // create valid moves
-void Queen::generate_moves() {
+void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col) {
 
 }

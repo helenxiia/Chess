@@ -153,6 +153,12 @@ void Board::run(vector<string> player_names) {
         if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
         try {
+            // create all valid moves for all pieces
+            for (int i = 0; i < (int) pieces.size(); ++i) {
+                pieces[i]->create_valid_moves();
+            }
+
+            // attempt to make a move
             vector<int> move_info = cur_player->move();
             if (move_info.size() == 0) { 
                 cout << "No Move Made" << endl; 

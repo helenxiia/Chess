@@ -8,7 +8,7 @@ class King : public Piece {
     King(int color);
     ~King();
     void print();
-    void generate_moves();
+    void generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col);
 };
 
 #endif

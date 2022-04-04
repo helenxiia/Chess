@@ -38,6 +38,14 @@ void Piece::set_is_taken() {
     is_taken = true;
 }
 
+void Piece::set_has_not_moved() {
+    has_not_moved = false;
+}
+
+bool Piece::get_has_not_moved() {
+    return has_not_moved;
+}
+
 // int Piece::get_status() { return status; }
 
 bool Piece::valid_move(Cell *cell) {
@@ -52,7 +60,11 @@ void Piece::print_piece() {
 }
 
 void Piece::create_valid_moves() {
-    generate_moves();
+    vector<vector<Cell*>> cur_board = get_board()->get_ref_board();
+    Cell *cur_cell = get_cell();
+    int cur_row = cur_cell->get_row();
+    int cur_col = cur_cell->get_col();
+    generate_moves(cur_board, cur_cell, cur_row, cur_col);
 }
 
 // modify valid moves

@@ -18,6 +18,6 @@ void Rook::print() {
 }
 
 // create valid moves
-void Rook::generate_moves() {
+void Rook::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col) {
 
 }

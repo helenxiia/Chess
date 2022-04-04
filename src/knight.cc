@@ -18,6 +18,6 @@ void Knight::print() {
 }
 
 // create valid moves
-void Knight::generate_moves() {
+void Knight::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col) {
 
 }

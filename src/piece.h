@@ -20,7 +20,7 @@ class Piece {
     // board that piece is on
     Board *board;
     // get all valid moves for a piece
-    virtual void generate_moves() = 0;
+    virtual void generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col) = 0;
     // print out piece
     virtual void print() = 0;
   public:
@@ -36,6 +36,8 @@ class Piece {
     int get_status();
     int get_id();
     void set_id(int i);
+    void set_has_not_moved();
+    bool get_has_not_moved();
     // piece is taken
     void set_is_taken();
     // move is valid

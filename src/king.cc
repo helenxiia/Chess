@@ -18,6 +18,6 @@ void King::print() {
 }
 
 // create valid moves
-void King::generate_moves() {
+void King::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col) {
 
 }

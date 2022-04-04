@@ -55,8 +55,10 @@ vector<int> Human::make_move() {
                 // removes the piece from the board in the specific cell
                 cur_board.at(rowi).at(coli)->remove_piece();
 
-                // sets the piece in the board at col,row
+                // sets the piece in the board at col, row
                 cur_board.at(rowf).at(colf)->set_piece(p);
+                p->set_cell(c);
+                p->set_has_not_moved(); // piece has moved
                 // return vector
                 return vector<int>{rowi, coli, rowf, colf, p->get_id(), -1};
                 break;
