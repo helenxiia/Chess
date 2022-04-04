@@ -211,14 +211,17 @@ void Chess::modify_num_pos(char ch, int col, int val) {
 // setup chess board mode
 // setup mode
 void Chess::setup() {
+    TextDisplay *text_display = get_td();
     if (get_players_size() == 0) { // no game was playing
         create_players({"human", "human"});
         init(); // initialize a chess board
+    } else {
+        text_display->print_board("chess");
     }
+
     int id = 17;
     string s;
     vector<vector<Cell*>> board = get_ref_board();
-    TextDisplay *text_display = get_td();
     while (getline(cin, s)) { 
         istringstream ss{s};
         string cmd;
@@ -228,24 +231,32 @@ void Chess::setup() {
             string pos;
             ss >> piece >> pos;
             Piece *p = create_piece(piece);
-            if (p) {
-                // change id
-                p->set_id(id);
-                ++id;
-                // set on board
-                if (board[num_pos(pos)[0]][num_pos(pos)[1]]) {
-                    Piece *old_p = board[num_pos(pos)[0]][num_pos(pos)[1]]->get_piece();
-                    modify_num_pos('-', old_p->get_color(), old_p->get_value());
+            try {
+                if (p) {
+                    // change id
+                    p->set_id(id);
+                    ++id;
+                    // set on board
+                    if (!board[num_pos(pos)[0]][num_pos(pos)[1]]) {
+                        Piece *old_p = board[num_pos(pos)[0]][num_pos(pos)[1]]->get_piece();
+                        modify_num_pos('-', old_p->get_color(), old_p->get_value());
+                    }
+                    set_piece(num_pos(pos)[0], num_pos(pos)[1], p);
+                    modify_num_pos('+', p->get_color(), p->get_value());
                 }
-                set_piece(num_pos(pos)[0], num_pos(pos)[1], p);
-                modify_num_pos('+', p->get_color(), p->get_value());
+            } catch (...) {
+                cerr << "Invalid Instruction" << endl;
             }
         } else if (cmd == "-") { // removes piece
-            string pos;
-            ss >> pos;
-            Piece *p = board[num_pos(pos)[0]][num_pos(pos)[1]]->get_piece();
-            board[num_pos(pos)[0]][num_pos(pos)[1]]->remove_piece();
-            modify_num_pos('-', p->get_color(), p->get_value());
+            try {
+                string pos;
+                ss >> pos;
+                Piece *p = board[num_pos(pos)[0]][num_pos(pos)[1]]->get_piece();
+                board[num_pos(pos)[0]][num_pos(pos)[1]]->remove_piece();
+                modify_num_pos('-', p->get_color(), p->get_value());
+            } catch (...) {
+                cerr << "Invalid Instruction" << endl;
+            }
         } else if (cmd == "=") { // sets turn
             string color;
             ss >> color;
@@ -253,6 +264,8 @@ void Chess::setup() {
                 set_turn(0);
             } else if (color == "black") {
                 set_turn(1);
+            } else {
+                cerr << "Invalid Instruction" << endl;
             }
         } else if (cmd == "done") {
             // check if setup is valid

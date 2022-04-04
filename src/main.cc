@@ -24,7 +24,7 @@ int main() {
             while (ss >> player) {
                 player_names.emplace_back(player);
             }
-            if (player_names.size() != 2) {
+            if (player_names.size() != 2 && player_names.size() != 0) {
                 cerr << "Playing Chess - Please Enter Two Players" << endl;
             } else {
                 chess_game->run(player_names); // run game

@@ -132,22 +132,28 @@ void Board::reset() {
 // run the game
 void Board::run(vector<string> player_names) {
     // first reset game if needed
-    reset();
-    currently_playing = true;
-    // make players
-    create_players(player_names);
-    // initialize board
-    init();
+    if (!player_names.size() == 0) {
+        reset();
+        // make players
+        create_players(player_names);
+        // initialize board
+        init();
+        // initialize score
+        for (int i = 0; i < get_players_size(); ++i) {
+            if (score.count(i) == 0) {
+                modify_score(i, 0);
+            }
+        }
+    } else {
+        td->print_board("chess");
+    }
     // assign id to pieces
     for (int i = 0; i < (int) pieces.size(); ++i) {
-        pieces.at(i)->set_id(i);
-    }
-    // initialize score
-    for (int i = 0; i < get_players_size(); ++i) {
-        if (score.count(i) == 0) {
-            modify_score(i, 0);
+        if (pieces.at(i)->get_id() == -1) {
+            pieces.at(i)->set_id(i);
         }
     }
+    currently_playing = true;
     // run
     while(currently_playing) { // while game is playing
         if (players.size() == 0) break; // no players so no game is being played
@@ -172,6 +178,7 @@ void Board::run(vector<string> player_names) {
 
             // create move
             Piece *last_piece = get_piece(move_info[5]);
+            cout << "hey " << move_info[4] << endl;
             Piece *cur_piece = get_piece(move_info[4]);
             Cell *init_cell = the_board.at(move_info[0]).at(move_info[1]).get();
             Cell *fini_cell = the_board.at(move_info[2]).at(move_info[3]).get();
