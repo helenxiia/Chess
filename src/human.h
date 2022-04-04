@@ -8,7 +8,7 @@ class Human : public Player {
     public:
     Human(int side);
     ~Human();
-    void make_move(); 
+    std::vector<int> make_move(); 
 
 };
 #endif

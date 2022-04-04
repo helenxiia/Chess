@@ -35,33 +35,52 @@ class Board {
     bool currently_playing; 
     // maps player to their current score
     static std::map<int, float> score; 
+    // points to a text display object
     std::unique_ptr<TextDisplay> td;
-  protected:
-    void set_board(int row, int col);
-    TextDisplay *get_td();
-    int get_players_size();
-    void set_piece(int row, int col, Piece *piece);
-    void add_player(Player *player);
-  public:
-    // constructor and destructor
-    Board();
-    virtual ~Board() = 0;
+    // rest the board
+    void reset();
+    // private virtual members
     // initialize the board as needed
     virtual void init() = 0; 
-    // get reference to the board
-    std::vector<std::vector<Cell*>> get_ref_board();
     // create the players
     virtual void create_players(std::vector<std::string> player_names) = 0;
     // returns whether or not the game is over
     virtual bool game_over() = 0; 
-    // Board observes Piece
-    virtual void notify() = 0;
+  protected:
+    // set the board to a specific length and width
+    void set_board(int row, int col);
+    // get the text display object
+    TextDisplay *get_td();
+    // get number of players
+    int get_players_size();
+    // add a player to the game
+    void add_player(Player *player);
+    // set a piece at a cell
+    void set_piece(int row, int col, Piece *piece);
+    // get piece using id
+    Piece *get_piece(int id);
+    // remove piece
+    void remove_piece(int row, int col);
     // edit the score board
     static void modify_score(int player, float point);
+    // get a score
+    static int get_score(int player);
+    // get size of score board
+    static int score_size();
+    // set turn
+    void set_turn(int color);
+  public:
+    // constructor and destructor
+    Board();
+    virtual ~Board() = 0;
+    // get reference to the board
+    std::vector<std::vector<Cell*>> get_ref_board();
+    // return if a player resigned
+    int resign();
     // setup mode
     virtual void setup() = 0;
     // run the game
-    void run(); 
+    void run(std::vector<std::string> player_names); 
 };
 
 #endif

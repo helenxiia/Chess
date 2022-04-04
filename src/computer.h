@@ -6,7 +6,9 @@
 class Computer : public Player {
     // inherts all of the fields from player
     public:
-    void make_move(); 
+    Computer(int side);
+    ~Computer();
+    std::vector<int> make_move(); 
 
 };
 #endif
