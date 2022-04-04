@@ -18,6 +18,8 @@ Piece::~Piece() {
             }
         }
     }
+    // detach from board
+    this->detach(board);
 }
 
 void Piece::set_cell(Cell *c) {
@@ -37,8 +39,8 @@ int Piece::get_id() { return id; }
 
 void Piece::set_id(int i) { id = i; }
 
-void Piece::set_is_taken() {
-    is_taken = true;
+void Piece::set_is_taken(bool b) {
+    is_taken = b;
 }
 
 int Piece::get_threats() { return threats; }
@@ -94,6 +96,8 @@ void Piece::set_board(Board *b) {
             this->attach(cell);
         }
     }
+    // attach to board
+    this->attach(board);
 } 
 
 // notify observers

@@ -16,6 +16,9 @@ Piece* Cell::get_piece() {
 
 // set piece on Cell
 void Cell::set_piece(Piece *p) {
+    if (piece) {
+        piece->set_is_taken(true);
+    }
     piece = p;
 }
 
@@ -79,7 +82,6 @@ void Cell::notify() {
             } else if (piece->get_color() == 1) { // black
                 if (piece->get_cell()->get_row() == row - 1 && 
                         (piece->get_cell()->get_col() == col - 1 || piece->get_cell()->get_col() == col + 1)) {
-                            cout << "Cell: " << row << " " << col << endl;
                             if (threats.count(1)) {
                                 ++threats[1];
                             } else {

@@ -70,6 +70,7 @@ void Chess::init() {
             cell->set_all_pieces(get_ref_pieces());
         }
     }
+    // text display
     TextDisplay *text_display = get_td();
     text_display->print_board("chess");
 }
@@ -297,5 +298,23 @@ void Chess::print_score() {
     } else {
         cout << "White: " << get_score(0) << endl;
         cout << "Black: " << get_score(1) << endl;
+    }
+}
+
+// notify
+void Chess::notify() {
+    cout << "hello" << endl;
+    for (auto piece : all_pieces) {
+        if (piece->get_value() == 10) { // is king
+            // check for check
+            int col = piece->get_color();
+            if (piece->get_cell()->get_threats(!col)) {
+                if (col == 0) {
+                    cout << "White is in check!" << endl;
+                } else if (col == 1) {
+                    cout << "Black is in check!" << endl;
+                }
+            }
+        }
     }
 }

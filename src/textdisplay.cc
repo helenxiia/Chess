@@ -35,7 +35,7 @@ void TextDisplay::print_board(const string &gametype) {
                     // } else {
                     //     // cout << "\u25A1";
                     // }
-                    // cout << cell->get_threats(0);
+                    // cout << cell->get_threats(1);
                     cout << " ";
                 } else {
                     cell->get_piece()->print_piece();

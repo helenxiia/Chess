@@ -42,7 +42,7 @@ class Piece : public Subject { // pieces are observed by cells
     void set_has_not_moved();
     bool get_has_not_moved();
     // piece is taken
-    void set_is_taken();
+    void set_is_taken(bool b);
     // move is valid
     bool valid_move(Cell* cell);
     // print piece
