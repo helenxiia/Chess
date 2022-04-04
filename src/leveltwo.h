@@ -6,6 +6,6 @@
 class LevelTwo : public Computer {
     // inherts all fields from computer and player
     public:
-    void make_move() override;
-}
+    vector<int> make_move() override;
+};
 #endif
