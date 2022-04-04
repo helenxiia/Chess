@@ -63,6 +63,13 @@ void Chess::init() {
     num_of.at(1) = 1; // 1 white queen
     set_piece(0, 3, new Queen(1)); // black
     num_of.at(7) = 1; // 1 black queen;
+    // set all cells to observe pieces
+    vector<vector<Cell*>> board = get_ref_board();
+    for (auto row : board) {
+        for (auto cell : row) {
+            cell->set_all_pieces(get_ref_pieces());
+        }
+    }
     TextDisplay *text_display = get_td();
     text_display->print_board("chess");
 }
