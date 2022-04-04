@@ -22,7 +22,7 @@ class Player {
     Board *get_board();
     Player(int side);
     virtual ~Player();
-    virtual void make_move() = 0;
+    virtual void make_move() = 0; // pure virtual method, cannot be called in this abstract class
     // void notify();
 };
 
