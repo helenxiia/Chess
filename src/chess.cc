@@ -193,7 +193,7 @@ void Chess::modify_num_pos(char ch, int col, int val) {
         case 5:
             piece = 2;
             break;
-        case 8:
+        case 9:
             piece = 1;
             break;
         case 10:
@@ -212,12 +212,12 @@ void Chess::modify_num_pos(char ch, int col, int val) {
 // setup mode
 void Chess::setup() {
     TextDisplay *text_display = get_td();
-    if (get_players_size() == 0) { // no game was playing
-        create_players({"human", "human"});
-        init(); // initialize a chess board
-    } else {
-        text_display->print_board("chess");
-    }
+    // if (get_players_size() == 0) { // no game was playing
+    create_players({"human", "human"});
+    init(); // initialize a chess board
+    // } else {
+    //     text_display->print_board("chess");
+    // }
 
     int id = 17;
     string s;

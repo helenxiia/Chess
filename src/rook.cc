@@ -1,4 +1,5 @@
 #include "rook.h"
+#include "cell.h"
 
 using namespace std;
 
@@ -19,5 +20,69 @@ void Rook::print() {
 
 // create valid moves
 void Rook::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col) {
-
+    // rooks move linearly 
+    // Up
+    int i = row + 1;
+    while (i < 8) {
+        Piece *cell_piece = board[i][col]->get_piece();
+        if (cell_piece) { // there is a piece on the cell
+            if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                break;
+            } else { // piece is different color, can capture
+                modify_valid_moves(board[i][col], 0);
+                break;
+            }
+        } else {
+            modify_valid_moves(board[i][col], 0); // add to valid moves
+            ++i;
+        }
+    }
+    // Down
+    i = row - 1;
+    while (i >= 0) {
+        Piece *cell_piece = board[i][col]->get_piece();
+        if (cell_piece) { // there is a piece on the cell
+            if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                break;
+            } else { // piece is different color, can capture
+                modify_valid_moves(board[i][col], 0);
+                break;
+            }
+        } else {
+            modify_valid_moves(board[i][col], 0); // add to valid moves
+            --i;
+        }
+    }
+    // Left
+    int j = row - 1;
+    while (j >= 0) {
+        Piece *cell_piece = board[row][j]->get_piece();
+        if (cell_piece) { // there is a piece on the cell
+            if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                break;
+            } else { // piece is different color, can capture
+                modify_valid_moves(board[row][j], 0);
+                break;
+            }
+        } else {
+            modify_valid_moves(board[row][j], 0); // add to valid moves
+            --j;
+        }
+    }
+    // Right
+    j = row + 1;
+    while (j < 8) {
+        Piece *cell_piece = board[row][j]->get_piece();
+        if (cell_piece) { // there is a piece on the cell
+            if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                break;
+            } else { // piece is different color, can capture
+                modify_valid_moves(board[row][j], 0);
+                break;
+            }
+        } else {
+            modify_valid_moves(board[row][j], 0); // add to valid moves
+            ++j;
+        }
+    }
 }

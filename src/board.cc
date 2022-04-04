@@ -173,12 +173,12 @@ void Board::run(vector<string> player_names) {
 
             // check if game over
             if (game_over()) {
+                players.clear(); // players leave
                 break;
             }
 
             // create move
             Piece *last_piece = get_piece(move_info[5]);
-            cout << "hey " << move_info[4] << endl;
             Piece *cur_piece = get_piece(move_info[4]);
             Cell *init_cell = the_board.at(move_info[0]).at(move_info[1]).get();
             Cell *fini_cell = the_board.at(move_info[2]).at(move_info[3]).get();
