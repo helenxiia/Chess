@@ -18,7 +18,7 @@ class Piece;
 class Player;
 class TextDisplay;
 
-class Board {
+class Board : public Observer {
     // board that the game is being played on
     std::vector<std::vector<std::unique_ptr<Cell>>> the_board; 
     // vector of previous moves made during the game
@@ -61,6 +61,8 @@ class Board {
     Piece *get_piece(int id);
     // remove piece
     void remove_piece(int row, int col);
+    // get reference to all pieces
+    std::vector<Piece*> get_ref_pieces();
     // edit the score board
     static void modify_score(int player, float point);
     // get a score
@@ -81,6 +83,8 @@ class Board {
     virtual void setup() = 0;
     // run the game
     void run(std::vector<std::string> player_names); 
+    // notify
+    virtual void notify() = 0;
 };
 
 #endif

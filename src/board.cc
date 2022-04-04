@@ -71,6 +71,15 @@ Piece* Board::get_piece(int id) {
     return nullptr;
 }
 
+// get reference to all pieces
+vector<Piece*> Board::get_ref_pieces() {
+    vector<Piece*> ps;
+    for (int i = 0; i < (int) pieces.size(); ++i) {
+        ps.emplace_back(pieces.at(i).get());
+    }
+    return ps;
+}
+
 // get reference to board
 vector<vector<Cell*>> Board::get_ref_board() {
     vector<vector<Cell*>> ref_board;
@@ -153,17 +162,16 @@ void Board::run(vector<string> player_names) {
             pieces.at(i)->set_id(i);
         }
     }
+    // create all valid moves for all pieces
+    for (int i = 0; i < (int) pieces.size(); ++i) {
+        pieces[i]->create_valid_moves();
+    }
     currently_playing = true;
     // run
     while(currently_playing) { // while game is playing
         if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
         try {
-            // create all valid moves for all pieces
-            for (int i = 0; i < (int) pieces.size(); ++i) {
-                pieces[i]->create_valid_moves();
-            }
-
             // attempt to make a move
             vector<int> move_info = cur_player->move();
             if (move_info.size() == 0) { 
@@ -193,6 +201,14 @@ void Board::run(vector<string> player_names) {
             }
             // increment count
             ++count;
+            // create all valid moves for all pieces
+            for (int i = 0; i < (int) pieces.size(); ++i) {
+                pieces[i]->create_valid_moves();
+            }
+            // notify pieces observers
+            for (int i = 0; i < (int) pieces.size(); ++i) {
+                pieces[i]->notifyObservers();
+            }
             // display
             td->print_board("chess");
         } catch (...) { // probably should define some error here
