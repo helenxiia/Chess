@@ -13,8 +13,8 @@ map<int, float> Board::score = map<int, float>();
 
 // constructor
 Board::Board() : the_board{vector<vector<unique_ptr<Cell>>>()}, previous_moves{vector<unique_ptr<Move>>()}, 
-                    pieces{vector<unique_ptr<Piece>>()}, players{vector<unique_ptr<Player>>()}, turn{0}, currently_playing{true},
-                    td{unique_ptr<TextDisplay>{new TextDisplay(this)}} {}
+                    pieces{vector<unique_ptr<Piece>>()}, players{vector<unique_ptr<Player>>()}, turn{0}, count{0}, 
+                    currently_playing{true}, td{unique_ptr<TextDisplay>{new TextDisplay(this)}} {}
 
 // destructor
 Board::~Board() {} 
@@ -41,17 +41,34 @@ int Board::get_players_size() {
     return (int) players.size();
 }
 
+// add player
+void Board::add_player(Player *player) {
+    player->set_board(this);
+    players.emplace_back(unique_ptr<Player>{player});
+}
+
 // set piece on board
 void Board::set_piece(int row, int col, Piece *piece) {
     Cell *cell = the_board[row][col].get();
     cell->set_piece(piece);
     piece->set_cell(cell);
+    piece->set_board(this);
+    // add to pieces
+    auto p = unique_ptr<Piece>{piece};
+    pieces.emplace_back(move(p));
+    // add to player
+    players.at(piece->get_color())->add_piece(piece);
 }
 
-// add player
-void Board::add_player(Player *player) {
-    player->set_board(this);
-    players.emplace_back(unique_ptr<Player>{player});
+// get piece using id
+Piece* Board::get_piece(int id) {
+    if (id == -1) return nullptr;
+    for (auto &piece : pieces) {
+        if (piece->get_id() == id) {
+            return piece.get();
+        }
+    } 
+    return nullptr;
 }
 
 // get reference to board
@@ -78,19 +95,95 @@ void Board::modify_score(int player, float point) {
     }
 }
 
+// get a score
+int Board::get_score(int player) {
+    return score.at(player);
+}
+
+// get size of score
+int Board::score_size() {
+    return score.size();
+}
+
+// set turn
+void Board::set_turn(int color) {
+    turn = color;
+}
+
+// player resigned
+int Board::resign() {
+    for (int i = 0; i < (int) players.size(); ++i) {
+        if (players.at(i)->get_resign()) return i; 
+    }
+    return -1;
+}
+
+// reset the game
+void Board::reset() {
+    the_board.clear();
+    previous_moves.clear();
+    pieces.clear();
+    players.clear();
+    currently_playing = false;
+    turn = 0;
+    count = 0;
+}
+
 // run the game
-void Board::run() {
+void Board::run(vector<string> player_names) {
+    // first reset game if needed
+    if (!player_names.size() == 0) {
+        reset();
+        // make players
+        create_players(player_names);
+        // initialize board
+        init();
+        // initialize score
+        for (int i = 0; i < get_players_size(); ++i) {
+            if (score.count(i) == 0) {
+                modify_score(i, 0);
+            }
+        }
+    } else {
+        td->print_board("chess");
+    }
+    // assign id to pieces
+    for (int i = 0; i < (int) pieces.size(); ++i) {
+        if (pieces.at(i)->get_id() == -1) {
+            pieces.at(i)->set_id(i);
+        }
+    }
+    currently_playing = true;
+    // run
     while(currently_playing) { // while game is playing
+        if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
         try {
-            // ---- NEED CLASSES TO BE DEFINED ---- //
-            // WE MAY NEED A COPY CONSTRUCTOR HERE
-            // SINCE I DON'T WANT TO DO THAT, LETS HAVE PLAYER RETURN A VECTOR WITH THE INFORMATION NEEDED FOR MOVE
-            // IE. LAST_PIECE, CURRENT_PIECE, INITIAL_CELL, FINAL_CELL
-            // THIS INCREASES COUPLING THO
-            // Move move = cur_player->make_move(); 
-            // previous_moves.emplace_back(move);
-            cur_player->make_move();
+            // create all valid moves for all pieces
+            for (int i = 0; i < (int) pieces.size(); ++i) {
+                pieces[i]->create_valid_moves();
+            }
+
+            // attempt to make a move
+            vector<int> move_info = cur_player->move();
+            if (move_info.size() == 0) { 
+                cout << "No Move Made" << endl; 
+                break;
+            }
+
+            // check if game over
+            if (game_over()) {
+                players.clear(); // players leave
+                break;
+            }
+
+            // create move
+            Piece *last_piece = get_piece(move_info[5]);
+            Piece *cur_piece = get_piece(move_info[4]);
+            Cell *init_cell = the_board.at(move_info[0]).at(move_info[1]).get();
+            Cell *fini_cell = the_board.at(move_info[2]).at(move_info[3]).get();
+            Move *move  = new Move(last_piece, cur_piece, init_cell, fini_cell, count);
+            previous_moves.emplace_back(unique_ptr<Move>{move});
 
             // increment turn
             if (turn == (int) players.size() - 1) { // it is last player's turn
@@ -102,11 +195,12 @@ void Board::run() {
             ++count;
             // display
             td->print_board("chess");
-            // create move
-            // Move *move  = new Move();
-            // previous_moves.emplace_back(move);
         } catch (...) { // probably should define some error here
             // throw invalid move
         }
+    }
+    cout << "End Of Game!" << endl;
+    for (auto &move : previous_moves) {
+        move->print();
     }
 }

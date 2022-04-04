@@ -8,6 +8,7 @@ class Bishop : public Piece {
     Bishop(int color);
     ~Bishop();
     void print();
+    void generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col);
 };
 
 #endif
