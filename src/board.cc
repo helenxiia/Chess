@@ -140,48 +140,86 @@ void Board::reset() {
 
 // run the game
 void Board::run(vector<string> player_names) {
+    currently_playing = true;
     // first reset game if needed
     if (!player_names.size() == 0) {
         reset();
+        currently_playing = true;
         // make players
-        create_players(player_names);
-        // initialize board
-        init();
-        // initialize score
-        for (int i = 0; i < get_players_size(); ++i) {
-            if (score.count(i) == 0) {
-                modify_score(i, 0);
+        try {
+            create_players(player_names);
+            // initialize board
+            init();
+            // initialize score
+            for (int i = 0; i < get_players_size(); ++i) {
+                if (score.count(i) == 0) {
+                    modify_score(i, 0);
+                }
             }
+        } catch (invalid_argument &r) {
+            cerr << "Invalid Player Inputted: Please Declare Human or Computer" << endl;
+            currently_playing = false;
         }
     } else {
         td->print_board("chess");
     }
     // assign id to pieces
     for (int i = 0; i < (int) pieces.size(); ++i) {
-        if (pieces.at(i)->get_id() == -1) {
-            pieces.at(i)->set_id(i);
-        }
+        pieces.at(i)->set_id(i);
     }
     // create all valid moves for all pieces
     for (int i = 0; i < (int) pieces.size(); ++i) {
-        pieces[i]->create_valid_moves();
+        if (pieces[i]->get_value() != 10) {
+            pieces[i]->create_valid_moves();
+        }
     }
-    currently_playing = true;
+    // notify pieces observers
+    for (int i = 0; i < (int) pieces.size(); ++i) {
+        pieces[i]->notifyObservers();
+    }
+    // recreate valid moves for kings to reasses the situation
+    for (int i = 0; i < (int) pieces.size(); ++i) {
+        if (pieces[i]->get_value() == 10) {
+            pieces[i]->create_valid_moves();
+        }
+    }
+    // attach cells to all pieces
+    for (int i = 0; i < (int) the_board.size(); ++i) {
+        for (int j = 0; j < (int) the_board.at(i).size(); ++j) {
+            the_board[i][j]->set_all_pieces(get_ref_pieces());
+        }
+    }
     // run
     while(currently_playing) { // while game is playing
         if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
         try {
+            // create all valid moves for all pieces
+            for (int i = 0; i < (int) pieces.size(); ++i) {
+                if (pieces[i]->get_value() != 10) {
+                    pieces[i]->create_valid_moves();
+                }
+            }
+            // notify pieces observers
+            for (int i = 0; i < (int) pieces.size(); ++i) {
+                pieces[i]->notifyObservers();
+            }
+            // recreate valid moves for kings to reasses the situation
+            for (int i = 0; i < (int) pieces.size(); ++i) {
+                if (pieces[i]->get_value() == 10) {
+                    pieces[i]->create_valid_moves();
+                }
+            }
+            // check if game over
+            if (game_over()) {
+                players.clear(); // players leave
+                currently_playing = false;
+                break;
+            }
             // attempt to make a move
             vector<int> move_info = cur_player->move();
             if (move_info.size() == 0) { 
                 cout << "No Move Made" << endl; 
-                break;
-            }
-
-            // check if game over
-            if (game_over()) {
-                players.clear(); // players leave
                 break;
             }
 
@@ -201,14 +239,6 @@ void Board::run(vector<string> player_names) {
             }
             // increment count
             ++count;
-            // create all valid moves for all pieces
-            for (int i = 0; i < (int) pieces.size(); ++i) {
-                pieces[i]->create_valid_moves();
-            }
-            // notify pieces observers
-            for (int i = 0; i < (int) pieces.size(); ++i) {
-                pieces[i]->notifyObservers();
-            }
             // display
             td->print_board("chess");
         } catch (...) { // probably should define some error here
@@ -216,7 +246,8 @@ void Board::run(vector<string> player_names) {
         }
     }
     cout << "End Of Game!" << endl;
-    for (auto &move : previous_moves) {
-        move->print();
-    }
+    // for (auto &move : previous_moves) {
+    //     move->print();
+    // }
+    reset();
 }

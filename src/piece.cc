@@ -69,6 +69,7 @@ void Piece::print_piece() {
 }
 
 void Piece::create_valid_moves() {
+    valid_moves.clear();
     vector<vector<Cell*>> cur_board = get_board()->get_ref_board();
     Cell *cur_cell = get_cell();
     int cur_row = cur_cell->get_row();
@@ -79,6 +80,11 @@ void Piece::create_valid_moves() {
 // modify valid moves
 void Piece::modify_valid_moves(Cell *cell, int i) {
     valid_moves[cell] = i;
+}
+
+// number of valid moves
+int Piece::num_valid_moves() {
+    return valid_moves.size();
 }
 
 // get the board
@@ -109,4 +115,5 @@ void Piece::notifyObservers() {
             cell->notify();
         }
     }
+    board->notify();
 }
