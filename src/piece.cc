@@ -120,10 +120,6 @@ Cell *Piece::get_random_valid_move(){
     return random_move;
 }
 
-// get number of valid moves
-int Piece::get_num_valid_moves() {
-    return valid_moves.size();
-}
 // notify observers
 void Piece::notifyObservers() {
     // notify all cells

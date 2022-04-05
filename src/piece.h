@@ -57,8 +57,6 @@ class Piece : public Subject { // pieces are observed by cells
     void set_board(Board *b);
     // get random valid move
     Cell *get_random_valid_move();
-    // get number of valid moves
-    int get_num_valid_moves();
     // notify observers
     void notifyObservers();
 };
