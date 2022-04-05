@@ -9,7 +9,7 @@ class Computer : public Player {
     public:
     Computer(int side);
     ~Computer();
-    std::vector<int> make_move(); 
+    std::vector<int> make_move() = 0; 
 
 
 };

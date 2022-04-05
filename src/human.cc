@@ -59,7 +59,8 @@ vector<int> Human::make_move() {
                 cur_board.at(rowf).at(colf)->set_piece(p);
                 p->set_cell(c);
                 p->set_has_not_moved(); // piece has moved
-                // return vector
+                // return vector of integers
+                // returns {inital row, inital column, final row, final column, id of piece, id of last piece} 
                 return vector<int>{rowi, coli, rowf, colf, p->get_id(), -1};
                 break;
             } catch (const out_of_range &r) {

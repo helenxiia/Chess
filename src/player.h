@@ -19,6 +19,7 @@ class Player {
     // move piece
     virtual std::vector<int> make_move() = 0;
   public:
+    Piece *get_random_piece();
     Player(int side);
     virtual ~Player();
     void set_board(Board *b);
