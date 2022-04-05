@@ -89,6 +89,8 @@ class Board : public Observer {
     void undo();
     // get the text display object
     TextDisplay *get_td();
+    // get a player
+    Player *get_player(int i);
 };
 
 #endif

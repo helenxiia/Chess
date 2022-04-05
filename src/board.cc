@@ -48,6 +48,11 @@ void Board::add_player(Player *player) {
     players.emplace_back(unique_ptr<Player>{player});
 }
 
+// get player
+Player *Board::get_player(int i) {
+    return players.at(i).get();
+}
+
 // set piece on board
 void Board::set_piece(int row, int col, Piece *piece) {
     Cell *cell = the_board[row][col].get();
