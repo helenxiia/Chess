@@ -10,6 +10,7 @@
 #include "human.h"
 #include "computer.h"
 #include "levelone.h"
+#include "leveltwo.h"
 
 
 #include <stdexcept>
@@ -85,10 +86,10 @@ void Chess::create_players(vector<string> player_names) {
         } else if (player == "computer1"){ // Computer 1
             LevelOne *new_player = new LevelOne(side);
             add_player(new_player);
-        }/*else if (player == "computer2"){ // Computer 1
+        }else if (player == "computer2"){ // Computer 1
             LevelTwo *new_player = new LevelTwo(side);
             add_player(new_player);
-        }else if (player == "computer3"){ // Computer 1
+        }/*else if (player == "computer3"){ // Computer 1
             LevelOne *new_player = new LevelOne(side);
             add_player(new_player);
         }else if (player == "computer4"){ // Computer 1

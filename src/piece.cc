@@ -120,6 +120,28 @@ Cell *Piece::get_random_valid_move(){
     return random_move;
 }
 
+
+// check if a move can capture
+Cell *Piece::can_capture() {
+    for ( auto move: valid_moves) {
+        if (move.second == 2) { // 2 = will capture
+        return move.first;
+        }
+    }
+    return nullptr;
+}
+
+// check if it check
+Cell *Piece::can_check() {
+    for ( auto move: valid_moves) {
+        if (move.second == -1) { // -1 = will check
+        return move.first;
+        }
+    }
+    return nullptr;
+}
+
+
 // notify observers
 void Piece::notifyObservers() {
     // notify all cells
