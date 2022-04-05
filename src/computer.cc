@@ -8,7 +8,3 @@ Computer::Computer(int side) : Player{side} {}
 
 // destructor
 Computer::~Computer() {}
-
-vector<int> Computer::make_move() {
-    return vector<int>();
-}

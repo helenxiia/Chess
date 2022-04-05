@@ -6,7 +6,7 @@
 #include "chess.h"
 
 using namespace std;
-
+bool setup = false;
 int main() {
     Chess *chess_game = new Chess();
     // get input 
@@ -24,13 +24,14 @@ int main() {
             while (ss >> player) {
                 player_names.emplace_back(player);
             }
-            if (player_names.size() != 2 && player_names.size() != 0) {
+            if (player_names.size() != 2 && player_names.size() == 0 && !setup) {
                 cerr << "Playing Chess - Please Enter Two Players" << endl;
             } else {
                 chess_game->run(player_names); // run game
             }
         } else if (cmd == "setup") {
             // setup mode
+            setup = true;
             chess_game->setup(); // call setup
         } else if (cmd == "exit") {
             break;
