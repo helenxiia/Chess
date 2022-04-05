@@ -32,6 +32,8 @@ class Player {
     // void notify();
     // add piece
     void add_piece(Piece *piece);
+    // remove piece
+    void remove_piece(Piece *piece);
     // get pieces
     std::vector<Piece*> get_pieces();
     // remove piece

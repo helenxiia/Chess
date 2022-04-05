@@ -1,10 +1,11 @@
 #include "king.h"
 #include "cell.h"
+#include "board.h"
 
 using namespace std;
 
 // constructor
-King::King(int color) : Piece{color, 10} {}
+King::King(int color) : Piece{color, 10}, castle{false} {}
 
 // destructor
 King::~King() {}
@@ -75,3 +76,4 @@ void King::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int
         }
     }
 }
+

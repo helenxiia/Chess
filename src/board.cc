@@ -48,6 +48,11 @@ void Board::add_player(Player *player) {
     players.emplace_back(unique_ptr<Player>{player});
 }
 
+// get player
+Player *Board::get_player(int i) {
+    return players.at(i).get();
+}
+
 // set piece on board
 void Board::set_piece(int row, int col, Piece *piece) {
     Cell *cell = the_board[row][col].get();
@@ -169,7 +174,7 @@ void Board::undo() {
             }
         }
     }
-    td->print_board("chess");
+    td->print_board("chess", -1);
 }
 
 // run the game
@@ -189,7 +194,7 @@ void Board::run(vector<string> player_names) {
             currently_playing = false;
         }
     } else {
-        td->print_board("chess");
+        td->print_board("chess", -1);
     }
     // initialize score
     for (int i = 0; i < get_players_size(); ++i) {
@@ -282,7 +287,7 @@ void Board::run(vector<string> player_names) {
                 }
                 // increment count
                 ++count;
-                td->print_board("chess");
+                td->print_board("chess", -1);
             } else {
                 cout << "Game State Is Invalid" << endl;
                 undo();

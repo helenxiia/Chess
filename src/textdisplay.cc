@@ -8,7 +8,7 @@ using namespace std;
 TextDisplay::TextDisplay(Board *board) : board{board} {}
 
 // print out the board
-void TextDisplay::print_board(const string &gametype) {
+void TextDisplay::print_board(const string &gametype, int threats) {
     vector<vector<Cell*>> gameboard = board->get_ref_board();
     if (gametype == "chess") { // if chess game
         // print out the column names
@@ -30,13 +30,13 @@ void TextDisplay::print_board(const string &gametype) {
                 auto cell = gameboard[i][j];
                 cout << "| ";
                 if (cell->get_piece() == nullptr) {
-                    // if ((i + j) % 2 == 0) {
-                    //     // cout << "\u25A0";
-                    // } else {
-                    //     // cout << "\u25A1";
-                    // }
-                    cout << cell->get_threats(0);
-                    // cout << " ";
+                    if (threats == -1) {
+                        cout << " ";
+                    } else if (threats == 0) {
+                        cout << cell->get_threats(0);
+                    } else if (threats == 1) {
+                        cout << cell->get_threats(1);
+                    }
                 } else {
                     //cout << cell->get_threats(0);
                     cell->get_piece()->print_piece();

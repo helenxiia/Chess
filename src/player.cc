@@ -50,6 +50,11 @@ void Player::add_piece(Piece *piece) {
     owned_pieces.emplace_back(piece);
 }
 
+// remove piece
+void Player::remove_piece(Piece *piece) {
+    owned_pieces.erase(find(owned_pieces.begin(), owned_pieces.end(), piece));
+}
+
 // get pieces
 vector<Piece*> Player::get_pieces() {
     return owned_pieces;

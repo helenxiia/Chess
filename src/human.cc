@@ -3,6 +3,7 @@
 #include "board.h"
 #include "cell.h"
 #include "piece.h"
+#include "textdisplay.h"
 #include <iostream>
 #include <stdio.h>
 #include <sstream>
@@ -51,6 +52,7 @@ vector<int> Human::make_move() {
                 // cell is valid move
                 Cell *c = cur_board.at(rowf).at(colf);
                 if (p->valid_move(c) == 0 || p->valid_move(c) == 3) throw out_of_range("Invalid Move For That Piece");
+                if (p->get_is_taken()) throw out_of_range("Piece Does Not Exist");
 
                 // removes the piece from the board in the specific cell
                 cur_board.at(rowi).at(coli)->remove_piece();
@@ -75,6 +77,12 @@ vector<int> Human::make_move() {
         } else if (command == "resign") {
             set_resign();
             return vector<int>{-1};
+        } else if (command == "threats-white") {
+            get_board()->get_td()->print_board("chess", 0);
+        } else if (command == "threats-black") {
+            get_board()->get_td()->print_board("chess", 1);
+        } else if (command == "threats-off" ) { 
+            get_board()->get_td()->print_board("chess", -1);
         } else {
             cerr << "Invalid Move: Please Enter Instruction 'move (row1, col1) (row2,col2)'" << endl;
         }

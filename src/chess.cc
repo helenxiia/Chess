@@ -74,7 +74,7 @@ void Chess::init() {
     all_pieces  = get_ref_pieces();
     // text display
     TextDisplay *text_display = get_td();
-    text_display->print_board("chess");
+    text_display->print_board("chess", -1);
 }
 
 // create players
@@ -254,7 +254,7 @@ void Chess::setup() {
         create_players({"human", "human"});
         init(); // initialize a chess board
     } else {
-        text_display->print_board("chess");
+        text_display->print_board("chess", -1);
     }
     string s;
     vector<vector<Cell*>> board = get_ref_board();
@@ -312,7 +312,7 @@ void Chess::setup() {
                 break;
             }
         }
-        text_display->print_board("chess");
+        text_display->print_board("chess", -1);
     }
     cout << "Setup Complete!" << endl;
 }

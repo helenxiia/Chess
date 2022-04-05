@@ -4,6 +4,7 @@
 #include "piece.h"
 
 class Rook : public Piece {
+    Piece *king;
   public:
     Rook(int color);
     ~Rook();
