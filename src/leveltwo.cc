@@ -15,6 +15,8 @@ const int letter_off_set = 96;
 
 LevelTwo::LevelTwo (int side): Computer{side} {};
 
+LevelTwo::~LevelTwo(){};
+
 vector<int> LevelTwo::make_move() { 
     // get the board 
     vector<vector<Cell*>> cur_board = get_board()->get_ref_board();
