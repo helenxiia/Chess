@@ -1,12 +1,15 @@
 #include <memory>
 #include <vector>
+#include <iterator>
+#include <cstdlib>
+#include <map>
 #include "piece.h"
 #include "board.h"
 #include "cell.h"
 
 using namespace std;
 
-Piece::Piece(int color, int value) : cell{nullptr}, color{color}, id{-1}, value{value}, is_taken{false}, has_not_moved{true} {}
+Piece::Piece(int color, int value) : cell{nullptr}, color{color}, id{-1}, value{value}, has_not_moved{true} {}
 
 Piece::~Piece() {
     // detach all cells in board
@@ -39,9 +42,6 @@ int Piece::get_id() { return id; }
 
 void Piece::set_id(int i) { id = i; }
 
-void Piece::set_is_taken(bool b) {
-    is_taken = b;
-}
 
 int Piece::get_threats() { return threats; }
 
@@ -105,6 +105,42 @@ void Piece::set_board(Board *b) {
     // attach to board
     this->attach(board);
 } 
+
+// get random valid move
+
+Cell *Piece::get_random_valid_move(){
+    auto it = valid_moves.begin();
+    print_piece();
+    cout<<endl;
+    cout << valid_moves.size() << endl;
+    cout <<rand() % valid_moves.size()<< endl;
+    std::advance(it, rand() % valid_moves.size());
+    
+    Cell *random_move = it->first;
+    return random_move;
+}
+
+
+// check if a move can capture
+Cell *Piece::can_capture() {
+    for ( auto move: valid_moves) {
+        if (move.second == 2) { // 2 = will capture
+        return move.first;
+        }
+    }
+    return nullptr;
+}
+
+// check if it check
+Cell *Piece::can_check() {
+    for ( auto move: valid_moves) {
+        if (move.second == -1) { // -1 = will check
+        return move.first;
+        }
+    }
+    return nullptr;
+}
+
 
 // notify observers
 void Piece::notifyObservers() {

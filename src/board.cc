@@ -6,6 +6,7 @@
 #include "piece.h"
 #include "textdisplay.h"
 
+
 using namespace std;
 
 // static map
@@ -226,6 +227,7 @@ void Board::run(vector<string> player_names) {
     while(currently_playing) { // while game is playing
         if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
+        
         try {
             // check if game over
             if (game_over()) {
@@ -247,7 +249,7 @@ void Board::run(vector<string> player_names) {
             }
 
             // create move
-            Piece *last_piece = get_piece(move_info[5]);
+            Piece *last_piece = get_piece(move_info[5]); // gets piece ptr based on id
             Piece *cur_piece = get_piece(move_info[4]);
             Cell *init_cell = the_board.at(move_info[0]).at(move_info[1]).get();
             Cell *fini_cell = the_board.at(move_info[2]).at(move_info[3]).get();

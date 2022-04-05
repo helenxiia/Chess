@@ -4,6 +4,7 @@
 #include <memory>
 #include <stdio.h>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -12,6 +13,12 @@ Player::Player(int side) : side{side}, owned_pieces{vector<Piece*>()}, board{nul
 
 // destructor
 Player::~Player() {}
+
+// get random piece
+Piece *Player::get_random_piece(){
+    int random = rand() % owned_pieces.size();
+    return owned_pieces.at(random);
+}
 
 // set board
 void Player::set_board(Board *b) {
