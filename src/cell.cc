@@ -16,9 +16,6 @@ Piece* Cell::get_piece() {
 
 // set piece on Cell
 void Cell::set_piece(Piece *p) {
-    if (piece) {
-        piece->set_is_taken(true);
-    }
     piece = p;
 }
 

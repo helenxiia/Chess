@@ -41,8 +41,6 @@ class Piece : public Subject { // pieces are observed by cells
     void set_id(int i);
     void set_has_not_moved();
     bool get_has_not_moved();
-    // piece is taken
-    void set_is_taken(bool b);
     // move is valid
     bool valid_move(Cell* cell);
     // print piece
@@ -55,6 +53,8 @@ class Piece : public Subject { // pieces are observed by cells
     Board *get_board();
     // set the board
     void set_board(Board *b);
+    // get random valid move
+    Cell *get_random_valid_move();
     // notify observers
     void notifyObservers();
 };

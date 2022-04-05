@@ -8,6 +8,9 @@
 #include "king.h"
 
 #include "human.h"
+#include "computer.h"
+#include "levelone.h"
+
 
 using namespace std;
 
@@ -79,10 +82,22 @@ void Chess::init() {
 void Chess::create_players(vector<string> player_names) {
     int side = 0;
     for (auto player : player_names) {
-        if (player == "human") { // Humane
+        if (player == "human") { // Human
             Human *new_player = new Human(side);
             add_player(new_player);
-        } else { // Computer
+        } else if (player == "computer1"){ // Computer 1
+            LevelOne *new_player = new LevelOne(side);
+            add_player(new_player);
+        }/*else if (player == "computer2"){ // Computer 1
+            LevelTwo *new_player = new LevelTwo(side);
+            add_player(new_player);
+        }else if (player == "computer3"){ // Computer 1
+            LevelOne *new_player = new LevelOne(side);
+            add_player(new_player);
+        }else if (player == "computer4"){ // Computer 1
+            LevelOne *new_player = new LevelOne(side);
+            add_player(new_player);
+        } */else {
 
         }
     }
