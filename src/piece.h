@@ -49,6 +49,8 @@ class Piece : public Subject { // pieces are observed by cells
     void create_valid_moves();
     // modify valid moves
     void modify_valid_moves(Cell *cell, int i);
+    // number of valid moves
+    int num_valid_moves();
     // get the board
     Board *get_board();
     // set the board

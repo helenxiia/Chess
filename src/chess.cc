@@ -12,6 +12,8 @@
 #include "levelone.h"
 
 
+#include <stdexcept>
+
 using namespace std;
 
 // constructor
@@ -66,13 +68,8 @@ void Chess::init() {
     num_of.at(1) = 1; // 1 white queen
     set_piece(0, 3, new Queen(1)); // black
     num_of.at(7) = 1; // 1 black queen;
-    // set all cells to observe pieces
-    vector<vector<Cell*>> board = get_ref_board();
-    for (auto row : board) {
-        for (auto cell : row) {
-            cell->set_all_pieces(get_ref_pieces());
-        }
-    }
+    // set all pieces
+    all_pieces  = get_ref_pieces();
     // text display
     TextDisplay *text_display = get_td();
     text_display->print_board("chess");
@@ -106,6 +103,12 @@ void Chess::create_players(vector<string> player_names) {
 // check if game is over
 bool Chess::game_over() {
     if (checkmate != -1) { // checkmate
+        // check for state
+        if (checkmate == 0) {
+            cout << "White is in checkmate!" << endl;
+        } else if (checkmate == 1) {
+            cout << "Black is in checkmate!" << endl;
+        }
         // NOT SURE IF THIS IS HOW MULTIPLAYER CHESS POINTS WORK
         for (int i = 0; i < get_players_size(); ++i) {
             if (i != checkmate) { // not the player that got checkmated
@@ -121,6 +124,13 @@ bool Chess::game_over() {
         }
         cout << "Stalemate" << endl;
         return true;
+    } else if (check != -1) {
+        if (check == 0) {
+            cout << "White is in check!" << endl;
+        } else if (check == 1) {
+            cout << "Black is in check!" << endl;
+        }
+        return false;
     } else {
         int res = resign();
         if (res != -1) {
@@ -232,17 +242,14 @@ void Chess::modify_num_pos(char ch, int col, int val) {
 }
 
 // setup chess board mode
-// setup mode
 void Chess::setup() {
     TextDisplay *text_display = get_td();
-    // if (get_players_size() == 0) { // no game was playing
-    create_players({"human", "human"});
-    init(); // initialize a chess board
-    // } else {
-    //     text_display->print_board("chess");
-    // }
-
-    int id = 17;
+    if (get_players_size() == 0) { // no game was playing
+        create_players({"human", "human"});
+        init(); // initialize a chess board
+    } else {
+        text_display->print_board("chess");
+    }
     string s;
     vector<vector<Cell*>> board = get_ref_board();
     while (getline(cin, s)) { 
@@ -256,9 +263,6 @@ void Chess::setup() {
             Piece *p = create_piece(piece);
             try {
                 if (p) {
-                    // change id
-                    p->set_id(id);
-                    ++id;
                     // set on board
                     if (!board[num_pos(pos)[0]][num_pos(pos)[1]]) {
                         Piece *old_p = board[num_pos(pos)[0]][num_pos(pos)[1]]->get_piece();
@@ -275,8 +279,10 @@ void Chess::setup() {
                 string pos;
                 ss >> pos;
                 Piece *p = board[num_pos(pos)[0]][num_pos(pos)[1]]->get_piece();
-                board[num_pos(pos)[0]][num_pos(pos)[1]]->remove_piece();
-                modify_num_pos('-', p->get_color(), p->get_value());
+                if (p) {
+                    board[num_pos(pos)[0]][num_pos(pos)[1]]->remove_piece();
+                    modify_num_pos('-', p->get_color(), p->get_value());
+                }
             } catch (...) {
                 cerr << "Invalid Instruction" << endl;
             }
@@ -318,17 +324,26 @@ void Chess::print_score() {
 
 // notify
 void Chess::notify() {
-    cout << "hello" << endl;
+    // set all pieces
+    all_pieces  = get_ref_pieces();
     for (auto piece : all_pieces) {
         if (piece->get_value() == 10) { // is king
             // check for check
-            int col = piece->get_color();
-            if (piece->get_cell()->get_threats(!col)) {
-                if (col == 0) {
-                    cout << "White is in check!" << endl;
-                } else if (col == 1) {
-                    cout << "Black is in check!" << endl;
+            int c = piece->get_color();
+            if (piece->get_cell()->get_threats(!c)) {
+                check = c;
+            } else {
+                check = -1;
+            }
+            // check for checkmate
+            if (check != -1) {
+                if (piece->num_valid_moves() == 0) {
+                    checkmate = c;
+                } else {
+                    checkmate = -1;
                 }
+            } else {
+                checkmate = -1;
             }
         }
     }

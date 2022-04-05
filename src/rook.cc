@@ -54,7 +54,7 @@ void Rook::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int
         }
     }
     // Left
-    int j = row - 1;
+    int j = col - 1;
     while (j >= 0) {
         Piece *cell_piece = board[row][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
@@ -70,7 +70,7 @@ void Rook::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int
         }
     }
     // Right
-    j = row + 1;
+    j = col + 1;
     while (j < 8) {
         Piece *cell_piece = board[row][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell

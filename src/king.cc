@@ -38,11 +38,30 @@ void King::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int
     for (auto move : possible_moves) {
         Piece *cell_piece = move->get_piece();
         if (cell_piece) { // there is a piece on the cell
-            if (cell_piece->get_color() != get_color()) { // if piece is not the same color, blocked
-                modify_valid_moves(move, 0);
+            if (cell_piece->get_color() != get_color()) { // if piece is not the same color, not blocked
+                int c = get_color();
+                if (c == 0) {
+                    if (move->get_threats(1) == 0) { // does not move into a check
+                        modify_valid_moves(move, 0); // add as a valid move
+                    }
+                } else if (c == 1) {
+                    if (move->get_threats(0) == 0) { // does not move into a check
+                        cout << move->get_row() << " " << move->get_col() << " " << move->get_threats(0) << endl;
+                        modify_valid_moves(move, 0); // add as a valid move
+                    }
+                }
             }
         } else {
-            modify_valid_moves(move, 0); // add to valid moves
+            int c = get_color();
+            if (c == 0) {
+                if (move->get_threats(1) == 0) { // does not move into a check
+                    modify_valid_moves(move, 0); // add as a valid move
+                }
+            } else if (c == 1) {
+                if (move->get_threats(0) == 0) { // does not move into a check
+                    modify_valid_moves(move, 0); // add as a valid move
+                }
+            }
         }
     }
 }
