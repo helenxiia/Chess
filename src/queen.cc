@@ -127,7 +127,7 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         }
     }
     // Left
-    j = row - 1;
+    j = col - 1;
     while (j >= 0) {
         Piece *cell_piece = board[row][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
@@ -143,7 +143,7 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         }
     }
     // Right
-    j = row + 1;
+    j = col + 1;
     while (j < 8) {
         Piece *cell_piece = board[row][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
