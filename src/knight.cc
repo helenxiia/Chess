@@ -45,10 +45,12 @@ void Knight::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, i
         Piece *cell_piece = move->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() != get_color()) { // if piece is not the same color, blocked
-                modify_valid_moves(move, 0);
+                modify_valid_moves(move, 2);
+            } else {
+                modify_valid_moves(move, 3);
             }
         } else {
-            modify_valid_moves(move, 0); // add to valid moves
+            modify_valid_moves(move, 1); // add to valid moves
         }
     }
 }

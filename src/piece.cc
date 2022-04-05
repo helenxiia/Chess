@@ -45,10 +45,6 @@ void Piece::set_is_taken(bool b) {
 
 int Piece::get_threats() { return threats; }
 
-void Piece::update_threats() {
-
-}
-
 void Piece::set_has_not_moved() {
     has_not_moved = false;
 }
@@ -57,11 +53,15 @@ bool Piece::get_has_not_moved() {
     return has_not_moved;
 }
 
-bool Piece::valid_move(Cell *cell) {
+int Piece::valid_move(Cell *cell) {
     if (valid_moves.count(cell)) {
-        return true;
+        return valid_moves.at(cell);
     }
-    return false;
+    return 0;
+}
+
+std::unordered_map<Cell*, int> Piece::get_valid_moves() {
+    return valid_moves;
 }
 
 void Piece::print_piece() {

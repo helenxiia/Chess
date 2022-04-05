@@ -44,7 +44,7 @@ class Piece : public Subject { // pieces are observed by cells
     // piece is taken
     void set_is_taken(bool b);
     // move is valid
-    bool valid_move(Cell* cell);
+    int valid_move(Cell* cell);
     // print piece
     void print_piece();
     // create valid moves
@@ -53,6 +53,8 @@ class Piece : public Subject { // pieces are observed by cells
     void modify_valid_moves(Cell *cell, int i);
     // number of valid moves
     int num_valid_moves();
+    // get valid moves
+    std::unordered_map<Cell*, int> get_valid_moves();
     // get the board
     Board *get_board();
     // set the board

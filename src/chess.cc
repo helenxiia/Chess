@@ -10,6 +10,7 @@
 #include "human.h"
 
 #include <stdexcept>
+#include <unordered_map>
 
 using namespace std;
 
@@ -94,7 +95,6 @@ bool Chess::game_over() {
         } else if (checkmate == 1) {
             cout << "Black is in checkmate!" << endl;
         }
-        // NOT SURE IF THIS IS HOW MULTIPLAYER CHESS POINTS WORK
         for (int i = 0; i < get_players_size(); ++i) {
             if (i != checkmate) { // not the player that got checkmated
                 modify_score(i, 1); // add 1 to score
@@ -109,13 +109,6 @@ bool Chess::game_over() {
         }
         cout << "Stalemate" << endl;
         return true;
-    } else if (check != -1) {
-        if (check == 0) {
-            cout << "White is in check!" << endl;
-        } else if (check == 1) {
-            cout << "Black is in check!" << endl;
-        }
-        return false;
     } else {
         int res = resign();
         if (res != -1) {
@@ -129,6 +122,19 @@ bool Chess::game_over() {
         }
         return false;
     }
+}
+
+// check if game state is valid
+bool Chess::state_valid() {
+    if (check != -1) {
+        if (check == 0) {
+            cout << "White is in check!" << endl;
+        } else if (check == 1) {
+            cout << "Black is in check!" << endl;
+        }
+        return false;
+    }
+    return true;
 }
 
 // get winner
@@ -307,6 +313,14 @@ void Chess::print_score() {
     }
 }
 
+// check if king has valid moves
+bool no_moves(Piece *king) {
+    for (auto pair : king->get_valid_moves()) {
+        if (pair.second != 3) return false;
+    }
+    return true;
+}
+
 // notify
 void Chess::notify() {
     // set all pieces
@@ -322,7 +336,7 @@ void Chess::notify() {
             }
             // check for checkmate
             if (check != -1) {
-                if (piece->num_valid_moves() == 0) {
+                if (no_moves(piece)) {
                     checkmate = c;
                 } else {
                     checkmate = -1;

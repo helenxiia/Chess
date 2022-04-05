@@ -25,7 +25,7 @@ void Pawn::generate_moves(vector<vector<Cell*>> board, Cell *cell, int row, int 
         if (get_color()) new_row = row + 2; // if black move other way
         Piece *cell_piece = board[new_row][col]->get_piece();
         if (!cell_piece) { // there is not a piece on the cell
-            modify_valid_moves(board[new_row][col], 0); // add to valid moves
+            modify_valid_moves(board[new_row][col], 1); // add to valid moves
             prev_twostep = true;
         }
     } 
@@ -35,6 +35,6 @@ void Pawn::generate_moves(vector<vector<Cell*>> board, Cell *cell, int row, int 
     if (get_color()) new_row = row + 1;
     Piece *cell_piece = board[new_row][col]->get_piece();
     if (!cell_piece) { // there is not a piece on the cell
-        modify_valid_moves(board[new_row][col], 0); // add to valid moves
+        modify_valid_moves(board[new_row][col], 1); // add to valid moves
     }
 }
