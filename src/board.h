@@ -51,8 +51,6 @@ class Board : public Observer {
   protected:
     // set the board to a specific length and width
     void set_board(int row, int col);
-    // get the text display object
-    TextDisplay *get_td();
     // get number of players
     int get_players_size();
     // add a player to the game
@@ -89,6 +87,8 @@ class Board : public Observer {
     virtual void notify() = 0;
     // undoes a singular move
     void undo();
+    // get the text display object
+    TextDisplay *get_td();
 };
 
 #endif

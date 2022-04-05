@@ -3,6 +3,7 @@
 #include "board.h"
 #include "cell.h"
 #include "piece.h"
+#include "textdisplay.h"
 #include <iostream>
 #include <stdio.h>
 #include <sstream>
@@ -75,6 +76,12 @@ vector<int> Human::make_move() {
         } else if (command == "resign") {
             set_resign();
             return vector<int>{-1};
+        } else if (command == "threats-white") {
+            get_board()->get_td()->print_board("chess", 0);
+        } else if (command == "threats-black") {
+            get_board()->get_td()->print_board("chess", 1);
+        } else if (command == "threats-off" ) { 
+            get_board()->get_td()->print_board("chess", -1);
         } else {
             cerr << "Invalid Move: Please Enter Instruction 'move (row1, col1) (row2,col2)'" << endl;
         }
