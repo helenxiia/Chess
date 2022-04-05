@@ -159,6 +159,7 @@ void Board::undo() {
     if (previous_moves.size() != 0) {
         Move *last_move = previous_moves.at(previous_moves.size() - 1).get();
         while (last_move->get_turn() == c) {
+            last_move->get_cur_piece()->print_piece(); cout << endl;
             last_move->get_init_cell()->set_piece(last_move->get_cur_piece());
             last_move->get_cur_piece()->set_cell(last_move->get_init_cell());
             if (last_move->get_last_piece()) {

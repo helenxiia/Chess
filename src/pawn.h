@@ -4,7 +4,7 @@
 #include "piece.h"
 
 class Pawn : public Piece {
-    bool promotable;
+    bool promoted;
     bool prev_twostep; // just made a twostep
   public:
     Pawn(int color);
