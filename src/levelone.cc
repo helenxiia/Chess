@@ -26,6 +26,7 @@ vector<int> LevelOne::make_move() {
     while (start_piece->num_valid_moves() == 0) {
         start_piece = get_random_piece();
     }
+
     Cell *start_cell = start_piece->get_cell();
     int randrowi = start_cell->get_row();
     int randcoli = start_cell->get_col();
@@ -34,15 +35,19 @@ vector<int> LevelOne::make_move() {
     //cout << "getting random valid move" << endl;
     Cell *random_move = start_piece->get_random_valid_move();
 
+    while(start_piece->get_move_value(random_move) == 3) {
+        random_move = start_piece->get_random_valid_move();
+    }
+
     int randrowf = random_move->get_row();
     int randcolf = random_move->get_col();
 
-    /*cout << "i got all the stuff";
+    cout << "i got all the stuff";
     start_piece->print_piece();
     cout << endl;
     cout << randrowi << randcoli;
     cout << randrowf <<randcolf;
-    */
+    
     
     try {
         // removes the piece from the board in the specific cell

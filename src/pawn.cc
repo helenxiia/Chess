@@ -52,6 +52,7 @@ if (get_has_not_moved()) { // can perform a twostep
             if (cell_piece3 != nullptr) {
                 modify_valid_moves(board[new_row][new_col_r], 1); // add to valid moves, captures
             }
+
         }
     }
 }

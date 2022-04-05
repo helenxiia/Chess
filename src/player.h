@@ -36,7 +36,8 @@ class Player {
     void remove_piece(Piece *piece);
     // get pieces
     std::vector<Piece*> get_pieces();
-    // 
+    // remove piece
+    void remove_piece(Piece *piece);
     // check if piece is owned
     bool own(Piece *piece);
 };
