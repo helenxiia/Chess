@@ -44,13 +44,13 @@ if (get_has_not_moved()) { // can perform a twostep
     if (new_col_l > 0) {
         Piece *cell_piece2 = board[new_row][new_col_l]->get_piece();
         if (cell_piece2 != nullptr) {
-            modify_valid_moves(board[new_row][new_col_l], 1); // add to valid moves
+            modify_valid_moves(board[new_row][new_col_l], 1); // add to valid moves, captures
         }
     }
     if (new_col_r < 8) {
     Piece *cell_piece3 = board[new_row][new_col_r]->get_piece();
         if (cell_piece3 != nullptr) {
-            modify_valid_moves(board[new_row][new_col_r], 1); // add to valid moves
+            modify_valid_moves(board[new_row][new_col_r], 1); // add to valid moves, captures
         }
     }
     

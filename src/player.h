@@ -7,6 +7,7 @@ class Piece;
 class Board;
 
 class Player {
+  protected:
     // 0 or 1, black or white, can be a string if we want
     // correlates to Board::turn variable
     int side;
@@ -33,6 +34,7 @@ class Player {
     void add_piece(Piece *piece);
     // get pieces
     std::vector<Piece*> get_pieces();
+    // 
     // check if piece is owned
     bool own(Piece *piece);
 };
