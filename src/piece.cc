@@ -123,6 +123,7 @@ Cell *Piece::get_random_valid_move(){
     std::advance(it, rand() % valid_moves.size());
     Cell *random_move = it->first;
     while(it->second == 3) {
+        it = valid_moves.begin();
     std::advance(it, rand() % valid_moves.size());
     }
     random_move = it->first;
@@ -132,7 +133,7 @@ Cell *Piece::get_random_valid_move(){
 
 // check if a move can capture
 Cell *Piece::get_capture() {
-    for ( auto move: valid_moves) {
+    for (auto move: valid_moves) {
         if (move.second == 2) { // 2 = will capture
         return move.first;
         }
