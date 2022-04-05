@@ -139,6 +139,39 @@ void Board::reset() {
     count = 0;
 }
 
+// undoes a single move
+void Board::undo() {
+    if (previous_moves.size() != 0) {
+        Move *last_move = previous_moves.at(previous_moves.size() - 1).get();
+        last_move->get_init_cell()->set_piece(last_move->get_cur_piece());
+        last_move->get_cur_piece()->set_cell(last_move->get_init_cell());
+        if (last_move->get_last_piece()) {
+            last_move->get_final_cell()->set_piece(last_move->get_last_piece());
+            last_move->get_last_piece()->set_cell(last_move->get_final_cell());
+        } else {
+            last_move->get_final_cell()->remove_piece();
+        }
+        previous_moves.pop_back();
+        // create all valid moves for all pieces
+        for (int i = 0; i < (int) pieces.size(); ++i) {
+            if (pieces[i]->get_value() != 10) {
+                pieces[i]->create_valid_moves();
+            }
+        }
+        // notify pieces observers
+        for (int i = 0; i < (int) pieces.size(); ++i) {
+            pieces[i]->notifyObservers();
+        }
+        // recreate valid moves for kings to reasses the situation
+        for (int i = 0; i < (int) pieces.size(); ++i) {
+            if (pieces[i]->get_value() == 10) {
+                pieces[i]->create_valid_moves();
+            }
+        }
+    }
+    td->print_board("chess");
+}
+
 // run the game
 void Board::run(vector<string> player_names) {
     currently_playing = true;
@@ -151,12 +184,6 @@ void Board::run(vector<string> player_names) {
             create_players(player_names);
             // initialize board
             init();
-            // initialize score
-            for (int i = 0; i < get_players_size(); ++i) {
-                if (score.count(i) == 0) {
-                    modify_score(i, 0);
-                }
-            }
         } catch (invalid_argument &r) {
             cerr << "Invalid Player Inputted: Please Declare Human or Computer" << endl;
             currently_playing = false;
@@ -164,9 +191,21 @@ void Board::run(vector<string> player_names) {
     } else {
         td->print_board("chess");
     }
+    // initialize score
+    for (int i = 0; i < get_players_size(); ++i) {
+        if (score.count(i) == 0) {
+            modify_score(i, 0);
+        }
+    }
     // assign id to pieces
     for (int i = 0; i < (int) pieces.size(); ++i) {
         pieces.at(i)->set_id(i);
+    }
+    // attach cells to all pieces
+    for (int i = 0; i < (int) the_board.size(); ++i) {
+        for (int j = 0; j < (int) the_board.at(i).size(); ++j) {
+            the_board[i][j]->set_all_pieces(get_ref_pieces());
+        }
     }
     // create all valid moves for all pieces
     for (int i = 0; i < (int) pieces.size(); ++i) {
@@ -184,18 +223,39 @@ void Board::run(vector<string> player_names) {
             pieces[i]->create_valid_moves();
         }
     }
-    // attach cells to all pieces
-    for (int i = 0; i < (int) the_board.size(); ++i) {
-        for (int j = 0; j < (int) the_board.at(i).size(); ++j) {
-            the_board[i][j]->set_all_pieces(get_ref_pieces());
-        }
-    }
     // run
     while(currently_playing) { // while game is playing
         if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
         
         try {
+            // check if game over
+            if (game_over()) {
+                players.clear(); // players leave
+                currently_playing = false;
+                break;
+            }
+            // attempt to make a move
+            vector<int> move_info = cur_player->move();
+            if (move_info.size() == 0) { 
+                cout << "No Move Made" << endl; 
+                break;
+            } else if (move_info.size() == 1) {
+                if (game_over()) {
+                    players.clear(); // players leave
+                    currently_playing = false;
+                    break;
+                }
+            }
+
+            // create move
+            Piece *last_piece = get_piece(move_info[5]); // gets piece ptr based on id
+            Piece *cur_piece = get_piece(move_info[4]);
+            Cell *init_cell = the_board.at(move_info[0]).at(move_info[1]).get();
+            Cell *fini_cell = the_board.at(move_info[2]).at(move_info[3]).get();
+            Move *move  = new Move(last_piece, cur_piece, init_cell, fini_cell, count);
+            previous_moves.emplace_back(unique_ptr<Move>{move});
+
             // create all valid moves for all pieces
             for (int i = 0; i < (int) pieces.size(); ++i) {
                 if (pieces[i]->get_value() != 10) {
@@ -212,37 +272,22 @@ void Board::run(vector<string> player_names) {
                     pieces[i]->create_valid_moves();
                 }
             }
-            // check if game over
-            if (game_over()) {
-                players.clear(); // players leave
-                currently_playing = false;
-                break;
-            }
-            // attempt to make a move
-            vector<int> move_info = cur_player->move();
-            if (move_info.size() == 0) { 
-                cout << "No Move Made" << endl; 
-                break;
-            }
 
-            // create move
-            Piece *last_piece = get_piece(move_info[5]); // gets piece ptr based on id
-            Piece *cur_piece = get_piece(move_info[4]);
-            Cell *init_cell = the_board.at(move_info[0]).at(move_info[1]).get();
-            Cell *fini_cell = the_board.at(move_info[2]).at(move_info[3]).get();
-            Move *move  = new Move(last_piece, cur_piece, init_cell, fini_cell, count);
-            previous_moves.emplace_back(unique_ptr<Move>{move});
-
-            // increment turn
-            if (turn == (int) players.size() - 1) { // it is last player's turn
-                turn = 0;
+            if (state_valid() != turn) {
+                // increment turn
+                if (turn == (int) players.size() - 1) { // it is last player's turn
+                    turn = 0;
+                } else {
+                    ++turn;
+                }
+                // increment count
+                ++count;
+                td->print_board("chess");
             } else {
-                ++turn;
+                cout << "Game State Is Invalid" << endl;
+                undo();
             }
-            // increment count
-            ++count;
             // display
-            td->print_board("chess");
         } catch (...) { // probably should define some error here
             // throw invalid move
         }

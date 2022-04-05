@@ -38,6 +38,7 @@ void TextDisplay::print_board(const string &gametype) {
                     cout << cell->get_threats(0);
                     // cout << " ";
                 } else {
+                    //cout << cell->get_threats(0);
                     cell->get_piece()->print_piece();
                 }
                 cout << " |";

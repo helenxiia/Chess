@@ -42,12 +42,22 @@ void King::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int
                 int c = get_color();
                 if (c == 0) {
                     if (move->get_threats(1) == 0) { // does not move into a check
-                        modify_valid_moves(move, 0); // add as a valid move
+                        modify_valid_moves(move, 2); // add as a valid move
                     }
                 } else if (c == 1) {
                     if (move->get_threats(0) == 0) { // does not move into a check
-                        cout << move->get_row() << " " << move->get_col() << " " << move->get_threats(0) << endl;
-                        modify_valid_moves(move, 0); // add as a valid move
+                        modify_valid_moves(move, 2); // add as a valid move
+                    }
+                }
+            } else {
+                int c = get_color();
+                if (c == 0) {
+                    if (move->get_threats(1) == 0) { // does not move into a check
+                        modify_valid_moves(move, 3); // add as a valid move
+                    }
+                } else if (c == 1) {
+                    if (move->get_threats(0) == 0) { // does not move into a check
+                        modify_valid_moves(move, 3); // add as a valid move
                     }
                 }
             }
@@ -55,11 +65,11 @@ void King::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int
             int c = get_color();
             if (c == 0) {
                 if (move->get_threats(1) == 0) { // does not move into a check
-                    modify_valid_moves(move, 0); // add as a valid move
+                    modify_valid_moves(move, 1); // add as a valid move
                 }
             } else if (c == 1) {
                 if (move->get_threats(0) == 0) { // does not move into a check
-                    modify_valid_moves(move, 0); // add as a valid move
+                    modify_valid_moves(move, 1); // add as a valid move
                 }
             }
         }

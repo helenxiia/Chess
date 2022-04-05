@@ -46,6 +46,8 @@ class Board : public Observer {
     virtual void create_players(std::vector<std::string> player_names) = 0;
     // returns whether or not the game is over
     virtual bool game_over() = 0; 
+    // returns whether or not the game state is valid
+    virtual int state_valid() = 0;
   protected:
     // set the board to a specific length and width
     void set_board(int row, int col);
@@ -85,6 +87,8 @@ class Board : public Observer {
     void run(std::vector<std::string> player_names); 
     // notify
     virtual void notify() = 0;
+    // undoes a singular move
+    void undo();
 };
 
 #endif

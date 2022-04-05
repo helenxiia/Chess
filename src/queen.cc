@@ -28,13 +28,14 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         Piece *cell_piece = board[i][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                modify_valid_moves(board[i][j], 3);
                 break;
             } else { // piece is different color, can capture
-                modify_valid_moves(board[i][j], 1); // sets the capture bit to 1
+                modify_valid_moves(board[i][j], 2);
                 break;
             }
         } else {
-            modify_valid_moves(board[i][j], 0); // add to valid moves
+            modify_valid_moves(board[i][j], 1); // add to valid moves
             ++i;
             ++j;
         }
@@ -46,13 +47,14 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         Piece *cell_piece = board[i][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                modify_valid_moves(board[i][j], 3);
                 break;
             } else { // piece is different color, can capture
-                modify_valid_moves(board[i][j], 1); // sets the capture bit to 1
+                modify_valid_moves(board[i][j], 2);
                 break;
             }
         } else {
-            modify_valid_moves(board[i][j], 0); // add to valid moves
+            modify_valid_moves(board[i][j], 1); // add to valid moves
             ++i;
             --j;
         }
@@ -64,13 +66,14 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         Piece *cell_piece = board[i][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                modify_valid_moves(board[i][j], 3);
                 break;
             } else { // piece is different color, can capture
-                modify_valid_moves(board[i][j], 1); // sets the capture bit to 1
+                modify_valid_moves(board[i][j], 2);
                 break;
             }
         } else {
-            modify_valid_moves(board[i][j], 0); // add to valid moves
+            modify_valid_moves(board[i][j], 1); // add to valid moves
             --i;
             ++j;
         }
@@ -82,13 +85,14 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         Piece *cell_piece = board[i][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                modify_valid_moves(board[i][j], 3);
                 break;
             } else { // piece is different color, can capture
-                modify_valid_moves(board[i][j], 1); // sets the capture bit to 1
+                modify_valid_moves(board[i][j], 2);
                 break;
             }
         } else {
-            modify_valid_moves(board[i][j], 0); // add to valid moves
+            modify_valid_moves(board[i][j], 1); // add to valid moves
             --i;
             --j;
         }
@@ -100,13 +104,14 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         Piece *cell_piece = board[i][col]->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                modify_valid_moves(board[i][col], 3);
                 break;
             } else { // piece is different color, can capture
-                modify_valid_moves(board[i][col], 0);
+                modify_valid_moves(board[i][col], 2);
                 break;
             }
         } else {
-            modify_valid_moves(board[i][col], 0); // add to valid moves
+            modify_valid_moves(board[i][col], 1); // add to valid moves
             ++i;
         }
     }
@@ -116,13 +121,14 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         Piece *cell_piece = board[i][col]->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                modify_valid_moves(board[i][col], 3);
                 break;
             } else { // piece is different color, can capture
-                modify_valid_moves(board[i][col], 0);
+                modify_valid_moves(board[i][col], 2);
                 break;
             }
         } else {
-            modify_valid_moves(board[i][col], 0); // add to valid moves
+            modify_valid_moves(board[i][col], 1); // add to valid moves
             --i;
         }
     }
@@ -132,13 +138,14 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         Piece *cell_piece = board[row][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                modify_valid_moves(board[row][j], 3);
                 break;
             } else { // piece is different color, can capture
-                modify_valid_moves(board[row][j], 0);
+                modify_valid_moves(board[row][j], 2);
                 break;
             }
         } else {
-            modify_valid_moves(board[row][j], 0); // add to valid moves
+            modify_valid_moves(board[row][j], 1); // add to valid moves
             --j;
         }
     }
@@ -148,13 +155,14 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         Piece *cell_piece = board[row][j]->get_piece();
         if (cell_piece) { // there is a piece on the cell
             if (cell_piece->get_color() == get_color()) { // if piece is same color, blocked
+                modify_valid_moves(board[row][j], 3);
                 break;
             } else { // piece is different color, can capture
-                modify_valid_moves(board[row][j], 0);
+                modify_valid_moves(board[row][j], 2);
                 break;
             }
         } else {
-            modify_valid_moves(board[row][j], 0); // add to valid moves
+            modify_valid_moves(board[row][j], 1); // add to valid moves
             ++j;
         }
     }

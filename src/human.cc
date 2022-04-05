@@ -50,22 +50,28 @@ vector<int> Human::make_move() {
 
                 // cell is valid move
                 Cell *c = cur_board.at(rowf).at(colf);
-                if (!p->valid_move(c)) throw out_of_range("Invalid Move For That Piece");
+                if (p->valid_move(c) == 0 || p->valid_move(c) == 3) throw out_of_range("Invalid Move For That Piece");
 
                 // removes the piece from the board in the specific cell
                 cur_board.at(rowi).at(coli)->remove_piece();
 
                 // sets the piece in the board at col, row
+                Piece *old_piece = cur_board.at(rowf).at(colf)->get_piece();
                 cur_board.at(rowf).at(colf)->set_piece(p);
                 p->set_cell(c);
                 p->set_has_not_moved(); // piece has moved
-                // return vector of integers
-                // returns {inital row, inital column, final row, final column, id of piece, id of last piece} 
-                return vector<int>{rowi, coli, rowf, colf, p->get_id(), -1};
+                // return 
+                if (old_piece) {
+                    return vector<int>{rowi, coli, rowf, colf, p->get_id(), old_piece->get_id()};
+                } else {
+                    return vector<int>{rowi, coli, rowf, colf, p->get_id(), -1};
+                }  
                 break;
             } catch (const out_of_range &r) {
                 cerr << "Invalid Move: " << r.what() << endl;
             }
+        } else if (command == "undo") {
+            get_board()->undo();
         } else if (command == "resign") {
             set_resign();
             return vector<int>{-1};

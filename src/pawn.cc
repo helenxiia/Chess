@@ -25,7 +25,7 @@ if (get_has_not_moved()) { // can perform a twostep
         if (get_color()) new_row = row + 2; // if black move other way
         Piece *cell_piece = board[new_row][col]->get_piece();
         if (!cell_piece) { // there is not a piece on the cell
-            modify_valid_moves(board[new_row][col], 0); // add to valid moves
+            modify_valid_moves(board[new_row][col], 1); // add to valid moves
             prev_twostep = true;
         }
     } 
@@ -35,9 +35,8 @@ if (get_has_not_moved()) { // can perform a twostep
     if (get_color()) new_row = row + 1;
     Piece *cell_piece = board[new_row][col]->get_piece();
     if (!cell_piece) { // there is not a piece on the cell
-        modify_valid_moves(board[new_row][col], 0); // add to valid moves
+        modify_valid_moves(board[new_row][col], 1); // add to valid moves
     }
-    
     int new_col_l = col -1;
     int new_col_r = col +1;
 
@@ -53,6 +52,4 @@ if (get_has_not_moved()) { // can perform a twostep
             modify_valid_moves(board[new_row][new_col_r], 1); // add to valid moves, captures
         }
     }
-    
-    
 }

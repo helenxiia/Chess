@@ -14,6 +14,29 @@ Move::Move(Piece *last_piece, Piece *current_piece, Cell *initial_cell, Cell *fi
 // destructor
 Move::~Move() {}
 
+// get initial cell
+Cell* Move::get_init_cell() {
+    return initial_cell;
+}
+
+// get final cell
+Cell* Move::get_final_cell() {
+    return final_cell;
+}
+
+// get current and last piece
+Piece *Move::get_cur_piece() {
+    return current_piece;
+}
+
+Piece *Move::get_last_piece() {
+    return last_piece;
+}
+
+int Move::get_turn() {
+    return turn;
+}
+
 // print
 void Move::print() {
     cout << endl;
