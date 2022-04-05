@@ -23,7 +23,7 @@ vector<int> LevelOne::make_move() {
 
     // get piece already owned by side
     Piece *start_piece = get_random_piece();
-    while (start_piece->get_num_valid_moves() == 0) {
+    while (start_piece->num_valid_moves() == 0) {
         start_piece = get_random_piece();
     }
     Cell *start_cell = start_piece->get_cell();
