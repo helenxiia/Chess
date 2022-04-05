@@ -24,7 +24,7 @@ class Chess : public Board {
     // game is over when checkmate or stalemate is true
     bool game_over();
     // game state is invalid when a piece is in check
-    bool state_valid();
+    int state_valid();
     // setup the chess board
     void setup();
     // Chess must observe its Pieces for check, checkmate, stalemate

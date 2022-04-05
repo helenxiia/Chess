@@ -19,15 +19,15 @@ class Move {
     // constructor and destructor
     Move(Piece *last_piece, Piece *current_piece, Cell *initial_cell, Cell *final_cell, int turn);
     ~Move();
-    // get initial row and column
-    int get_init_row();
-    int get_init_col();
-    // get final row and column
-    int get_fin_row();
-    int get_fin_col();
+    // get initial cell
+    Cell* get_init_cell();
+    // get final cell
+    Cell* get_final_cell();
     // get current and last piece
     Piece *get_cur_piece();
     Piece *get_last_piece();
+    // get turn
+    int get_turn();
     void print();
 };
 

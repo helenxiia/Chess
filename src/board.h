@@ -47,7 +47,7 @@ class Board : public Observer {
     // returns whether or not the game is over
     virtual bool game_over() = 0; 
     // returns whether or not the game state is valid
-    virtual bool state_valid() = 0;
+    virtual int state_valid() = 0;
   protected:
     // set the board to a specific length and width
     void set_board(int row, int col);
