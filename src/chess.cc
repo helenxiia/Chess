@@ -6,7 +6,7 @@
 #include "rook.h"
 #include "queen.h"
 #include "king.h"
-
+#include "move.h"
 #include "human.h"
 #include "computer.h"
 #include "levelone.h"
@@ -338,6 +338,7 @@ bool no_moves(Piece *king) {
 
 // notify
 void Chess::notify() {
+    vector<vector<Cell*>> b = get_ref_board();
     // set all pieces
     all_pieces  = get_ref_pieces();
     for (auto piece : all_pieces) {
@@ -358,6 +359,56 @@ void Chess::notify() {
                 }
             } else {
                 checkmate = -1;
+            }
+            // check for castle
+            if (piece->receive_unique_status()) {
+                int r = piece->get_cell()->get_row();
+                int c = piece->get_cell()->get_col();
+                if (r == 7 && c == 6) { // white king side
+                    Cell *rook_cell = b[7][7];
+                    Cell *new_rook = b[7][5];
+                    Piece *rook = b[7][7]->get_piece();
+                    if (rook != nullptr && rook->get_has_not_moved()) {
+                        rook_cell->remove_piece();
+                        new_rook->set_piece(rook);
+                        Move *m = new Move(nullptr, rook, rook_cell, new_rook, get_count());
+                        add_move(m);
+                        piece->create_unique_status();
+                    }
+                } else if (r == 7 && c == 2) {
+                    Cell *rook_cell = b[7][0];
+                    Cell *new_rook = b[7][3];
+                    Piece *rook = b[7][0]->get_piece();
+                    if (rook != nullptr && rook->get_has_not_moved()) {
+                        rook_cell->remove_piece();
+                        new_rook->set_piece(rook);
+                        Move *m = new Move(nullptr, rook, rook_cell, new_rook, get_count());
+                        add_move(m);
+                        piece->create_unique_status();
+                    }
+                } else if (r == 0 && c == 6) { // black king
+                    Cell *rook_cell = b[0][7];
+                    Cell *new_rook = b[0][5];
+                    Piece *rook = b[0][7]->get_piece();
+                    if (rook != nullptr && rook->get_has_not_moved()) {
+                        rook_cell->remove_piece();
+                        new_rook->set_piece(rook);
+                        Move *m = new Move(nullptr, rook, rook_cell, new_rook, get_count());
+                        add_move(m);
+                        piece->create_unique_status();
+                    }
+                } else if (r == 0 && c == 2) {
+                    Cell *rook_cell = b[0][0];
+                    Cell *new_rook = b[0][3];
+                    Piece *rook = b[0][0]->get_piece();
+                    if (rook != nullptr && rook->get_has_not_moved()) {
+                        rook_cell->remove_piece();
+                        new_rook->set_piece(rook);
+                        Move *m = new Move(nullptr, rook, rook_cell, new_rook, get_count());
+                        add_move(m);
+                        piece->create_unique_status();
+                    }
+                }
             }
         }
     }

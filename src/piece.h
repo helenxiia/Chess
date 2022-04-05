@@ -15,7 +15,6 @@ class Piece : public Subject { // pieces are observed by cells
     int color; // 0 is black 1 is white
     int id;
     int value;
-    bool is_taken;
     std::unordered_map<Cell*, int> valid_moves;
     bool has_not_moved;
     // board that piece is on
@@ -24,6 +23,9 @@ class Piece : public Subject { // pieces are observed by cells
     virtual void generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int row, int col) = 0;
     // print out piece
     virtual void print() = 0;
+    // unique status
+    virtual void unique_status() = 0;
+    virtual bool get_unique_status() = 0;
   public:
     // constructor and destructor
     Piece(int color, int value);
@@ -40,8 +42,6 @@ class Piece : public Subject { // pieces are observed by cells
     void set_id(int i);
     void set_has_not_moved();
     bool get_has_not_moved();
-    void set_is_taken();
-    bool get_is_taken();
     // move is valid
     int valid_move(Cell* cell);
     // print piece
@@ -66,6 +66,9 @@ class Piece : public Subject { // pieces are observed by cells
     Cell *get_check();
     // notify observers
     void notifyObservers();
+    // create unique status if applicable
+    void create_unique_status();
+    bool receive_unique_status();
 };
 
 #endif

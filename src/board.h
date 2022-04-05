@@ -55,6 +55,8 @@ class Board : public Observer {
     int get_players_size();
     // add a player to the game
     void add_player(Player *player);
+    // get a player
+    Player *get_player(int i);
     // set a piece at a cell
     void set_piece(int row, int col, Piece *piece);
     // get piece using id
@@ -71,6 +73,10 @@ class Board : public Observer {
     static int score_size();
     // set turn
     void set_turn(int color);
+    // add a move to previous moves
+    void add_move(Move *move);
+    // get count
+    int get_count();
   public:
     // constructor and destructor
     Board();
@@ -89,8 +95,6 @@ class Board : public Observer {
     void undo();
     // get the text display object
     TextDisplay *get_td();
-    // get a player
-    Player *get_player(int i);
 };
 
 #endif

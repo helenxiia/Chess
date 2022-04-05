@@ -125,6 +125,15 @@ void Board::set_turn(int color) {
     turn = color;
 }
 
+// add a move
+void Board::add_move(Move *m) {
+    previous_moves.emplace_back(move(unique_ptr<Move>{m}));
+}
+
+int Board::get_count() {
+    return count;
+}
+
 // player resigned
 int Board::resign() {
     for (int i = 0; i < (int) players.size(); ++i) {
@@ -146,17 +155,22 @@ void Board::reset() {
 
 // undoes a single move
 void Board::undo() {
+    int c = count - 1;
     if (previous_moves.size() != 0) {
         Move *last_move = previous_moves.at(previous_moves.size() - 1).get();
-        last_move->get_init_cell()->set_piece(last_move->get_cur_piece());
-        last_move->get_cur_piece()->set_cell(last_move->get_init_cell());
-        if (last_move->get_last_piece()) {
-            last_move->get_final_cell()->set_piece(last_move->get_last_piece());
-            last_move->get_last_piece()->set_cell(last_move->get_final_cell());
-        } else {
-            last_move->get_final_cell()->remove_piece();
+        while (last_move->get_turn() == c) {
+            last_move->get_init_cell()->set_piece(last_move->get_cur_piece());
+            last_move->get_cur_piece()->set_cell(last_move->get_init_cell());
+            if (last_move->get_last_piece()) {
+                last_move->get_final_cell()->set_piece(last_move->get_last_piece());
+                last_move->get_last_piece()->set_cell(last_move->get_final_cell());
+            } else {
+                last_move->get_final_cell()->remove_piece();
+            }
+            previous_moves.pop_back();
+            if (previous_moves.size() == 0) break;
+            last_move = previous_moves.at(previous_moves.size() - 1).get();
         }
-        previous_moves.pop_back();
         // create all valid moves for all pieces
         for (int i = 0; i < (int) pieces.size(); ++i) {
             if (pieces[i]->get_value() != 10) {
@@ -173,6 +187,8 @@ void Board::undo() {
                 pieces[i]->create_valid_moves();
             }
         }
+        count = c;
+        turn = c % players.size();
     }
     td->print_board("chess", -1);
 }

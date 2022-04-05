@@ -4,7 +4,7 @@
 using namespace std;
 
 // constructor
-Pawn::Pawn(int color) : Piece{color, 1} {}
+Pawn::Pawn(int color) : Piece{color, 1}, promotable{false}, prev_twostep{false} {}
 
 // destructor
 Pawn::~Pawn() {}
@@ -54,4 +54,12 @@ if (get_has_not_moved()) { // can perform a twostep
             }
         }
     }
+}
+
+void Pawn::unique_status() {
+    promotable = true;
+}
+
+bool Pawn::get_unique_status() {
+    return promotable;
 }
