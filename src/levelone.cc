@@ -12,9 +12,6 @@
 
 using namespace std;
 
-/*
-Helper function to get random piece
-*/
 const int letter_off_set = 96;
 
 LevelOne::LevelOne (int side): Computer{side} {};
@@ -26,6 +23,9 @@ vector<int> LevelOne::make_move() {
 
     // get piece already owned by side
     Piece *start_piece = get_random_piece();
+    while (start_piece->get_num_valid_moves() == 0) {
+        start_piece = get_random_piece();
+    }
     Cell *start_cell = start_piece->get_cell();
     int randrowi = start_cell->get_row();
     int randcoli = start_cell->get_col();

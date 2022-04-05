@@ -104,8 +104,9 @@ void Piece::set_board(Board *b) {
 
 Cell *Piece::get_random_valid_move(){
     auto it = valid_moves.begin();
-    cout <<"hello" <<endl;
-    cout << valid_moves.size();
+    print_piece();
+    cout<<endl;
+    cout << valid_moves.size() << endl;
     cout <<rand() % valid_moves.size()<< endl;
     std::advance(it, rand() % valid_moves.size());
     
@@ -113,6 +114,10 @@ Cell *Piece::get_random_valid_move(){
     return random_move;
 }
 
+// get number of valid moves
+int Piece::get_num_valid_moves() {
+    return valid_moves.size();
+}
 // notify observers
 void Piece::notifyObservers() {
     // notify all cells
