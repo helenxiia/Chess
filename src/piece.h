@@ -16,7 +16,6 @@ class Piece : public Subject { // pieces are observed by cells
     int id;
     int value;
     bool is_taken;
-    int threats;
     std::unordered_map<Cell*, int> valid_moves;
     bool has_not_moved;
     // board that piece is on
@@ -35,12 +34,14 @@ class Piece : public Subject { // pieces are observed by cells
     // get and set values of piece
     int get_color();
     int get_value();
-    int get_threats();
-    void update_threats();
+    // int get_threats();
+    // void update_threats();
     int get_id();
     void set_id(int i);
     void set_has_not_moved();
     bool get_has_not_moved();
+    void set_is_taken();
+    bool get_is_taken();
     // move is valid
     int valid_move(Cell* cell);
     // print piece

@@ -52,6 +52,7 @@ vector<int> Human::make_move() {
                 // cell is valid move
                 Cell *c = cur_board.at(rowf).at(colf);
                 if (p->valid_move(c) == 0 || p->valid_move(c) == 3) throw out_of_range("Invalid Move For That Piece");
+                if (p->get_is_taken()) throw out_of_range("Piece Does Not Exist");
 
                 // removes the piece from the board in the specific cell
                 cur_board.at(rowi).at(coli)->remove_piece();
