@@ -68,3 +68,5 @@ vector<int> LevelTwo::make_move() {
         
     return vector<int>();
 }
+
+LevelTwo::~LevelTwo(){};

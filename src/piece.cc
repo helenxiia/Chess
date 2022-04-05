@@ -84,7 +84,13 @@ void Piece::modify_valid_moves(Cell *cell, int i) {
 
 // number of valid moves
 int Piece::num_valid_moves() {
-    return valid_moves.size();
+    int count = 0;
+    for (auto move: valid_moves) {
+        if(move.second != 3) {
+            ++count;
+        }
+    }
+    return count;
 }
 
 // get the board
@@ -110,19 +116,25 @@ void Piece::set_board(Board *b) {
 
 Cell *Piece::get_random_valid_move(){
     auto it = valid_moves.begin();
+    std::advance(it, rand() % valid_moves.size());
+    Cell *random_move = it->first;
+
     print_piece();
     cout<<endl;
     cout << valid_moves.size() << endl;
     cout <<rand() % valid_moves.size()<< endl;
-    std::advance(it, rand() % valid_moves.size());
-    
-    Cell *random_move = it->first;
+    cout << random_move->get_row() << random_move->get_col();
     return random_move;
+}
+
+// get move value
+int Piece::get_move_value( Cell * move){
+    return valid_moves[move];
 }
 
 
 // check if a move can capture
-Cell *Piece::can_capture() {
+Cell *Piece::get_capture() {
     for ( auto move: valid_moves) {
         if (move.second == 2) { // 2 = will capture
         return move.first;
@@ -132,7 +144,7 @@ Cell *Piece::can_capture() {
 }
 
 // check if it check
-Cell *Piece::can_check() {
+Cell *Piece::get_check() {
     for ( auto move: valid_moves) {
         if (move.second == -1) { // -1 = will check
         return move.first;
