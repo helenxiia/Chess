@@ -70,6 +70,8 @@ vector<int> Human::make_move() {
             } catch (const out_of_range &r) {
                 cerr << "Invalid Move: " << r.what() << endl;
             }
+        } else if (command == "undo") {
+            get_board()->undo();
         } else if (command == "resign") {
             set_resign();
             return vector<int>{-1};

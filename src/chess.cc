@@ -125,16 +125,15 @@ bool Chess::game_over() {
 }
 
 // check if game state is valid
-bool Chess::state_valid() {
+int Chess::state_valid() {
     if (check != -1) {
         if (check == 0) {
-            cout << "White is in check!" << endl;
+            cout << "White is in Check!" << endl;
         } else if (check == 1) {
-            cout << "Black is in check!" << endl;
+            cout << "Black is in Check!" << endl;
         }
-        return false;
     }
-    return true;
+    return check;
 }
 
 // get winner
