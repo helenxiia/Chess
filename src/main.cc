@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <memory>
 
 #include "board.h"
 #include "chess.h"
@@ -8,7 +9,8 @@
 using namespace std;
 bool setup = false;
 int main() {
-    Chess *chess_game = new Chess();
+    Chess *cg = new Chess();
+    auto chess_game = unique_ptr<Chess>{cg};
     // get input 
     // should only get "game white-player black-player" and setup
     // other input should all be handled in other classes
@@ -43,5 +45,4 @@ int main() {
         }
     }
     chess_game->print_score();
-    delete chess_game;
 }
