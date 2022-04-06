@@ -16,6 +16,14 @@ const int letter_off_set = 96;
 LevelTwo::LevelTwo (int side): Computer{side} {};
 
 vector<int> LevelTwo::make_move() { 
+
+    string input;
+     while (getline(cin, input)) {
+        istringstream iss(input);
+        string command;
+        iss >> command;
+        if (command == "move") {
+
     // get the board 
     vector<vector<Cell*>> cur_board = get_board()->get_ref_board();
     Piece *start_piece;
@@ -89,6 +97,8 @@ vector<int> LevelTwo::make_move() {
                 cerr << "Invalid Move: " << r.what() << endl;
                 make_move();
         }
+        }
+     }
         
     return vector<int>();
 }
