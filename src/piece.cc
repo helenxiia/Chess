@@ -114,23 +114,25 @@ void Piece::set_board(Board *b) {
 
 Cell *Piece::get_random_valid_move(){
     auto it = valid_moves.begin();
-    print_piece();
-    cout<<endl;
-    cout << valid_moves.size() << endl;
-    cout <<rand() % valid_moves.size()<< endl;
     std::advance(it, rand() % valid_moves.size());
     Cell *random_move = it->first;
     while(it->second == 3) {
         it = valid_moves.begin();
-    std::advance(it, rand() % valid_moves.size());
+        std::advance(it, rand() % valid_moves.size());
     }
     random_move = it->first;
     return random_move;
 }
 
+// get move value
+int Piece::get_move_value( Cell * move){
+    return valid_moves[move];
+}
+
 
 // check if a move can capture
 Cell *Piece::get_capture() {
+
     for (auto move: valid_moves) {
         if (move.second == 2) { // 2 = will capture
         return move.first;
