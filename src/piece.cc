@@ -43,8 +43,8 @@ int Piece::get_id() { return id; }
 
 void Piece::set_id(int i) { id = i; }
 
-void Piece::set_has_not_moved() {
-    has_not_moved = false;
+void Piece::set_has_not_moved(bool b) {
+    has_not_moved = b;
 }
 
 bool Piece::get_has_not_moved() {

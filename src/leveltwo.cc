@@ -57,7 +57,7 @@ vector<int> LevelTwo::make_move() {
         // sets the piece in the board at col, row
         move->set_piece(start_piece);
         start_piece->set_cell(move);
-        start_piece->set_has_not_moved(); // piece has moved
+        start_piece->set_has_not_moved(false); // piece has moved
 
         // return vector of integers
         // returns {inital row, inital column, final row, final column, id of piece, id of last piece} 

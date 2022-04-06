@@ -75,6 +75,8 @@ class Board : public Observer {
     void set_turn(int color);
     // add a move to previous moves
     void add_move(Move *move);
+    // get move
+    Move *get_move(int i);
     // get count
     int get_count();
   public:
@@ -88,7 +90,7 @@ class Board : public Observer {
     // setup mode
     virtual void setup() = 0;
     // run the game
-    void run(std::vector<std::string> player_names); 
+    void run(std::vector<std::string> player_names, bool undo_mode); 
     // notify
     virtual void notify() = 0;
     // undoes a singular move

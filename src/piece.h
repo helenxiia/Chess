@@ -40,7 +40,7 @@ class Piece : public Subject { // pieces are observed by cells
     // void update_threats();
     int get_id();
     void set_id(int i);
-    void set_has_not_moved();
+    void set_has_not_moved(bool b);
     bool get_has_not_moved();
     // move is valid
     int valid_move(Cell* cell);

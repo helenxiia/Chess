@@ -61,7 +61,7 @@ vector<int> Human::make_move() {
                 Piece *old_piece = cur_board.at(rowf).at(colf)->get_piece();
                 cur_board.at(rowf).at(colf)->set_piece(p);
                 p->set_cell(c);
-                p->set_has_not_moved(); // piece has moved
+                p->set_has_not_moved(false); // piece has moved
                 // return 
                 if (old_piece) {
                     return vector<int>{rowi, coli, rowf, colf, p->get_id(), old_piece->get_id()};
@@ -72,8 +72,6 @@ vector<int> Human::make_move() {
             } catch (const out_of_range &r) {
                 cerr << "Invalid Move: " << r.what() << endl;
             }
-        } else if (command == "undo") {
-            get_board()->undo();
         } else if (command == "resign") {
             set_resign();
             return vector<int>{-1};

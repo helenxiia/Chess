@@ -504,7 +504,9 @@ void Chess::notify() {
                 castle(piece);
             }
         } else if (piece->get_value() == 1) { // is pawn
-            promote(piece);
+            if (piece->get_cell()->get_row() == 0 || piece->get_cell()->get_row() == 7) {
+                promote(piece);
+            } 
         }
     }
 }

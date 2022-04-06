@@ -20,14 +20,13 @@ void Pawn::print() {
 
 // create valid moves
 void Pawn::generate_moves(vector<vector<Cell*>> board, Cell *cell, int row, int col) {
-if (get_has_not_moved()) { // can perform a twostep
+    if (get_has_not_moved()) { // can perform a twostep
         int new_row = row - 2;
         if (get_color()) new_row = row + 2; // if black move other way
         if (new_row < 8 && new_row >= 0) {
             Piece *cell_piece = board[new_row][col]->get_piece();
             if (!cell_piece) { // there is not a piece on the cell
-                modify_valid_moves(board[new_row][col], 1); // add to valid moves
-                prev_twostep = true;
+                modify_valid_moves(board[new_row][col], 4); // add to valid moves
             }
         }
     } 
@@ -46,22 +45,23 @@ if (get_has_not_moved()) { // can perform a twostep
         if (new_col_l >= 0) {
             Piece *cell_piece2 = board[new_row][new_col_l]->get_piece();
             if (cell_piece2 != nullptr) {
-                modify_valid_moves(board[new_row][new_col_l], 1); // add to valid moves, captures
+                modify_valid_moves(board[new_row][new_col_l], 2); // add to valid moves, captures
             }
         }
         if (new_col_r < 8) {
             Piece *cell_piece3 = board[new_row][new_col_r]->get_piece();
             if (cell_piece3 != nullptr) {
-                modify_valid_moves(board[new_row][new_col_r], 1); // add to valid moves, captures
+                modify_valid_moves(board[new_row][new_col_r], 2); // add to valid moves, captures
             }
         }
     }
 }
 
 void Pawn::unique_status() {
-    promoted = true;
+    promoted = !promoted;
+    prev_twostep = !prev_twostep;
 }
 
 bool Pawn::get_unique_status() {
-    return promoted;
+    return promoted && prev_twostep;
 }

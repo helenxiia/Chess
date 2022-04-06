@@ -130,6 +130,14 @@ void Board::add_move(Move *m) {
     previous_moves.emplace_back(move(unique_ptr<Move>{m}));
 }
 
+// get move
+Move *Board::get_move(int i) {
+    if (previous_moves.size() != 0)  {
+        return previous_moves.at(i).get();
+    }
+    return nullptr;
+}
+
 int Board::get_count() {
     return count;
 }
@@ -159,7 +167,6 @@ void Board::undo() {
     if (previous_moves.size() != 0) {
         Move *last_move = previous_moves.at(previous_moves.size() - 1).get();
         while (last_move->get_turn() == c) {
-            last_move->get_cur_piece()->print_piece(); cout << endl;
             last_move->get_init_cell()->set_piece(last_move->get_cur_piece());
             last_move->get_cur_piece()->set_cell(last_move->get_init_cell());
             if (last_move->get_last_piece()) {
@@ -167,6 +174,23 @@ void Board::undo() {
                 last_move->get_last_piece()->set_cell(last_move->get_final_cell());
             } else {
                 last_move->get_final_cell()->remove_piece();
+            }
+            int rowi = last_move->get_init_cell()->get_row();
+            int coli = last_move->get_init_cell()->get_col();
+            int rowf = last_move->get_final_cell()->get_row();
+            int colf = last_move->get_final_cell()->get_col();
+            if (last_move->get_cur_piece()->get_value() == 1) {
+                if (rowi - rowf == 2 || rowi - rowf == -2) {
+                    last_move->get_cur_piece()->set_has_not_moved(true);
+                } else if (rowf == 8 || rowf == 0) {
+                    last_move->get_cur_piece()->create_unique_status();
+                }
+            } else if (last_move->get_cur_piece()->get_value() == 10) {
+                if (coli - colf == 2 || coli - colf == -2) {
+                    last_move->get_cur_piece()->set_has_not_moved(true);
+                }
+            } else if (last_move->get_cur_piece()->get_value() == 5) {
+                last_move->get_cur_piece()->set_has_not_moved(true);
             }
             previous_moves.pop_back();
             if (previous_moves.size() == 0) break;
@@ -195,7 +219,7 @@ void Board::undo() {
 }
 
 // run the game
-void Board::run(vector<string> player_names) {
+void Board::run(vector<string> player_names, bool undo_mode) {
     currently_playing = true;
     // first reset game if needed
     if (!player_names.size() == 0) {
@@ -247,9 +271,22 @@ void Board::run(vector<string> player_names) {
     }
     // run
     while(currently_playing) { // while game is playing
+        string s;
+        if (undo_mode) {
+            cout << "Enter 'play' to play a move or 'undo' to undo: " << endl;
+            while (getline(cin, s)) {
+                if (s == "undo") {
+                    undo();
+                    break;
+                } else if (s == "play") {
+                    break;
+                } else {
+                    cout << "Please enter 'play' to play a move or 'undo' to undo: " << endl;
+                }
+            }
+        }
         if (players.size() == 0) break; // no players so no game is being played
         Player *cur_player = players.at(turn).get(); // get which player is playing, based on the turn
-        
         try {
             // check if game over
             if (game_over()) {
