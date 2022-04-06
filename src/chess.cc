@@ -99,6 +99,7 @@ void Chess::create_players(vector<string> player_names) {
         } */else {
 
         }
+        ++side;
     }
 }
 

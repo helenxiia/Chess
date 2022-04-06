@@ -53,6 +53,7 @@ void Pawn::generate_moves(vector<vector<Cell*>> board, Cell *cell, int row, int 
             if (cell_piece3 != nullptr) {
                 modify_valid_moves(board[new_row][new_col_r], 2); // add to valid moves, captures
             }
+
         }
     }
 }

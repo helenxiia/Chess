@@ -10,6 +10,8 @@ class Computer : public Player {
     Computer(int side);
     ~Computer();
     std::vector<int> make_move() = 0; 
+    //Piece *get_existing_piece();
+    bool valid_computer_move(Piece *init, Piece *final);
 
 
 };
