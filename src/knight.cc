@@ -54,3 +54,7 @@ void Knight::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, i
         }
     }
 }
+
+void Knight::unique_status() {}
+
+bool Knight::get_unique_status() { return false; }

@@ -14,6 +14,10 @@ class Chess : public Board {
     std::vector<int> num_of; // number of chess pieces [king, queen, rook, knight, bishop, pawn] x2
     // modify num_of
     void modify_num_pos(char ch, int col, int val);
+    // handle castle
+    void castle(Piece *piece);
+    // handle promote
+    void promote(Piece *piece);
   public:
     // constructor and destructor
     Chess(); 

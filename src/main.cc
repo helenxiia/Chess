@@ -18,16 +18,21 @@ int main() {
         string cmd;
         ss >> cmd;
         if (cmd == "game") {
+            bool undo_mode = false;
             // create game
             vector<string> player_names;
             string player;
             while (ss >> player) {
-                player_names.emplace_back(player);
+                if (player == "-undo") {
+                    undo_mode = true;
+                } else {
+                    player_names.emplace_back(player);
+                }
             }
             if (player_names.size() != 2 && player_names.size() == 0 && !setup) {
                 cerr << "Playing Chess - Please Enter Two Players" << endl;
             } else {
-                chess_game->run(player_names); // run game
+                chess_game->run(player_names, undo_mode); // run game
             }
         } else if (cmd == "setup") {
             // setup mode

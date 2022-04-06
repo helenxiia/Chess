@@ -98,3 +98,7 @@ void Bishop::generate_moves(vector<vector<Cell*>> board, Cell *cell, int row, in
         }
     }
 }
+
+void Bishop::unique_status() {}
+
+bool Bishop::get_unique_status() { return false; }
