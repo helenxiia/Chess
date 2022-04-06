@@ -21,7 +21,7 @@ void Cell::set_piece(Piece *p) {
 
 // removes Piece from Cell
 void Cell::remove_piece() {
-    if (piece) piece->set_is_taken(); // piece is captured
+    // delete piece; // not sure if this is necessary 
     piece = nullptr;
 }
 

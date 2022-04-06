@@ -20,17 +20,39 @@ vector<int> LevelOne::make_move() {
     //cout << "starting make_move in computer1";
     // get the board 
     vector<vector<Cell*>> cur_board = get_board()->get_ref_board();
+    vector<Piece*> current_pieces;
+
+    // iterate over the board to get current pieces (gets rid of ate up pieces)
+    for ( int i = 0; i < 8; i ++) {
+        for ( int j = 0; j < 8; j ++) {
+            Piece *my_piece = cur_board.at(i).at(j)->get_piece();
+        if ( my_piece != nullptr && my_piece->get_color() == side){
+            current_pieces.emplace_back(my_piece);
+            //my_piece->print_piece();
+            }
+        }
+    }
+
+    int random = rand() % current_pieces.size();
+    Piece *start_piece = current_pieces.at(random);
 
     // get piece already owned by side
-    Piece *start_piece = get_random_piece();
     while (start_piece->num_valid_moves() == 0) {
-        start_piece = get_random_piece();
+        random = rand() % current_pieces.size();
+        start_piece = current_pieces.at(random);
     }
+    
 
     Cell *start_cell = start_piece->get_cell();
     int randrowi = start_cell->get_row();
     int randcoli = start_cell->get_col();
 
+    /*
+    cout << "start: ";
+    start_piece->print_piece();
+    cout << randrowi << randcoli <<endl;
+    */
+   
     // get a random valid move
     //cout << "getting random valid move" << endl;
     Cell *random_move = start_piece->get_random_valid_move();
@@ -41,13 +63,18 @@ vector<int> LevelOne::make_move() {
 
     int randrowf = random_move->get_row();
     int randcolf = random_move->get_col();
+    
+    /*
+    cout <<  "final: ";
+    random_move->get_piece()->print_piece();
+    cout <<randrowf << randcolf <<endl;
 
     cout << "i got all the stuff";
     start_piece->print_piece();
     cout << endl;
     cout << randrowi << randcoli;
     cout << randrowf <<randcolf;
-    
+    */
     
     try {
         // removes the piece from the board in the specific cell

@@ -23,6 +23,7 @@ class Player {
     Piece *get_random_piece();
     Player(int side);
     virtual ~Player();
+    bool get_side();
     void set_board(Board *b);
     Board *get_board();
     std::vector<int> move();
@@ -36,8 +37,6 @@ class Player {
     void remove_piece(Piece *piece);
     // get pieces
     std::vector<Piece*> get_pieces();
-    // remove piece
-    void remove_piece(Piece *piece);
     // check if piece is owned
     bool own(Piece *piece);
 };

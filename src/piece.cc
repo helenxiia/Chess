@@ -116,16 +116,9 @@ Cell *Piece::get_random_valid_move(){
     auto it = valid_moves.begin();
     std::advance(it, rand() % valid_moves.size());
     Cell *random_move = it->first;
-
-    print_piece();
-    cout<<endl;
-    cout << valid_moves.size() << endl;
-    cout <<rand() % valid_moves.size()<< endl;
-    std::advance(it, rand() % valid_moves.size());
-    Cell *random_move = it->first;
     while(it->second == 3) {
         it = valid_moves.begin();
-    std::advance(it, rand() % valid_moves.size());
+        std::advance(it, rand() % valid_moves.size());
     }
     random_move = it->first;
     return random_move;
