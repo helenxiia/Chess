@@ -31,7 +31,7 @@ void TextDisplay::print_board(const string &gametype, int threats) {
                 cout << "| ";
                 if (cell->get_piece() == nullptr) {
                     if (threats == -1) {
-                        cout << cell->get_threats(0);
+                        cout << " ";
                     } else if (threats == 0) {
                         cout << cell->get_threats(0);
                     } else if (threats == 1) {
