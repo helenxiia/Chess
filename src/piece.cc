@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Piece::Piece(int color, int value) : cell{nullptr}, color{color}, id{-1}, value{value}, is_taken{false}, 
+Piece::Piece(int color, int value) : cell{nullptr}, color{color}, id{-1}, value{value}, 
                                     valid_moves{unordered_map<Cell*, int>()}, has_not_moved{true}, board{nullptr} {}
 
 Piece::~Piece() {
@@ -43,8 +43,8 @@ int Piece::get_id() { return id; }
 
 void Piece::set_id(int i) { id = i; }
 
-void Piece::set_has_not_moved() {
-    has_not_moved = false;
+void Piece::set_has_not_moved(bool b) {
+    has_not_moved = b;
 }
 
 bool Piece::get_has_not_moved() {
@@ -164,10 +164,10 @@ void Piece::notifyObservers() {
     board->notify();
 }
 
-void Piece::set_is_taken() {
-    is_taken = !is_taken;
+void Piece::create_unique_status() {
+    unique_status();
 }
 
-bool Piece::get_is_taken() {
-    return is_taken;
+bool Piece::receive_unique_status() {
+    return get_unique_status();
 }

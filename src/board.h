@@ -55,6 +55,8 @@ class Board : public Observer {
     int get_players_size();
     // add a player to the game
     void add_player(Player *player);
+    // get a player
+    Player *get_player(int i);
     // set a piece at a cell
     void set_piece(int row, int col, Piece *piece);
     // get piece using id
@@ -71,6 +73,12 @@ class Board : public Observer {
     static int score_size();
     // set turn
     void set_turn(int color);
+    // add a move to previous moves
+    void add_move(Move *move);
+    // get move
+    Move *get_move(int i);
+    // get count
+    int get_count();
   public:
     // constructor and destructor
     Board();
@@ -82,15 +90,13 @@ class Board : public Observer {
     // setup mode
     virtual void setup() = 0;
     // run the game
-    void run(std::vector<std::string> player_names); 
+    void run(std::vector<std::string> player_names, bool undo_mode); 
     // notify
     virtual void notify() = 0;
     // undoes a singular move
     void undo();
     // get the text display object
     TextDisplay *get_td();
-    // get a player
-    Player *get_player(int i);
 };
 
 #endif

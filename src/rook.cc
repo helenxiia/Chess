@@ -90,3 +90,7 @@ void Rook::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int
         }
     }
 }
+
+void Rook::unique_status() {}
+
+bool Rook::get_unique_status() { return false; }

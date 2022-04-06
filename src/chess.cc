@@ -6,7 +6,7 @@
 #include "rook.h"
 #include "queen.h"
 #include "king.h"
-
+#include "move.h"
 #include "human.h"
 #include "computer.h"
 #include "levelone.h"
@@ -337,8 +337,148 @@ bool no_moves(Piece *king) {
     return true;
 }
 
+// handle castle
+void Chess::castle(Piece *piece) {
+    vector<vector<Cell*>> b = get_ref_board();
+    int r = piece->get_cell()->get_row();
+    int c = piece->get_cell()->get_col();
+    if (r == 7 && c == 6) { // white king side
+        Cell *rook_cell = b[7][7];
+        Cell *new_rook = b[7][5];
+        Piece *rook = b[7][7]->get_piece();
+        if (rook != nullptr && rook->get_has_not_moved()) {
+            rook_cell->remove_piece();
+            new_rook->set_piece(rook);
+            Move *m = new Move(nullptr, rook, rook_cell, new_rook, get_count());
+            add_move(m);
+            piece->create_unique_status();
+        }
+    } else if (r == 7 && c == 2) {
+        Cell *rook_cell = b[7][0];
+        Cell *new_rook = b[7][3];
+        Piece *rook = b[7][0]->get_piece();
+        if (rook != nullptr && rook->get_has_not_moved()) {
+            rook_cell->remove_piece();
+            new_rook->set_piece(rook);
+            Move *m = new Move(nullptr, rook, rook_cell, new_rook, get_count());
+            add_move(m);
+            piece->create_unique_status();
+        }
+    } else if (r == 0 && c == 6) { // black king
+        Cell *rook_cell = b[0][7];
+        Cell *new_rook = b[0][5];
+        Piece *rook = b[0][7]->get_piece();
+        if (rook != nullptr && rook->get_has_not_moved()) {
+            rook_cell->remove_piece();
+            new_rook->set_piece(rook);
+            Move *m = new Move(nullptr, rook, rook_cell, new_rook, get_count());
+            add_move(m);
+            piece->create_unique_status();
+        }
+    } else if (r == 0 && c == 2) {
+        Cell *rook_cell = b[0][0];
+        Cell *new_rook = b[0][3];
+        Piece *rook = b[0][0]->get_piece();
+        if (rook != nullptr && rook->get_has_not_moved()) {
+            rook_cell->remove_piece();
+            new_rook->set_piece(rook);
+            Move *m = new Move(nullptr, rook, rook_cell, new_rook, get_count());
+            add_move(m);
+            piece->create_unique_status();
+        }
+    }
+}
+
+// handle promote
+void Chess::promote(Piece *piece) {
+    vector<vector<Cell*>> b = get_ref_board();
+    if (piece->get_color() == 0 && !piece->receive_unique_status()) { // white
+        Cell *cur_cell = piece->get_cell();
+        Piece *new_p;
+        if (cur_cell->get_row() == 0) { // can promote
+            cur_cell->remove_piece();
+            cout << "Select a piece to promote to (Q, R, B, N): " << endl;
+            string s;
+            while (getline(cin, s)) {
+                if (s == "Q") {
+                    new_p = new Queen(0);
+                    set_piece(cur_cell->get_row(), cur_cell->get_col(), new_p);
+                    break;
+                } else if (s == "R") {
+                    new_p = new Rook(0);
+                    set_piece(cur_cell->get_row(), cur_cell->get_col(), new_p);
+                    break;
+                } else if (s == "B") {
+                    new_p = new Bishop(0);
+                    set_piece(cur_cell->get_row(), cur_cell->get_col(), new_p);
+                    break;
+                } else if (s == "N") {
+                    new_p = new Knight(0);
+                    set_piece(cur_cell->get_row(), cur_cell->get_col(), new_p);
+                    break;
+                } else {
+                    cout << "Please enter a valid piece (Q, R, B, N): " << endl;
+                }
+            }
+            // attach cells to all pieces
+            for (int i = 0; i < (int) b.size(); ++i) {
+                for (int j = 0; j < (int) b.at(i).size(); ++j) {
+                    b[i][j]->set_all_pieces(get_ref_pieces());
+                }
+            }
+            // id
+            new_p->set_id(get_count() + 32);
+            Move *m = new Move(piece, new_p, cur_cell, cur_cell, get_count());
+            add_move(m);
+            piece->create_unique_status();
+        }
+    } else if (piece->get_color() == 1 && !piece->receive_unique_status()) { // black
+        Cell *cur_cell = piece->get_cell();
+        Piece *new_p;
+        if (cur_cell->get_row() == 7) { // can promote
+            cur_cell->remove_piece();
+            cout << "Select a piece to promote to (q, r, b, n): " << endl;
+            string s;
+            while (getline(cin, s)) {
+                if (s == "q") {
+                    new_p = new Queen(1);
+                    set_piece(cur_cell->get_row(), cur_cell->get_col(), new_p);
+                    break;
+                } else if (s == "r") {
+                    new_p = new Rook(1);
+                    set_piece(cur_cell->get_row(), cur_cell->get_col(), new_p);
+                    break;
+                } else if (s == "b") {
+                    new_p = new Bishop(1);
+                    set_piece(cur_cell->get_row(), cur_cell->get_col(), new_p);
+                    break;
+                } else if (s == "n") {
+                    new_p = new Knight(1);
+                    set_piece(cur_cell->get_row(), cur_cell->get_col(), new_p);
+                    break;
+                } else {
+                    cout << "Please enter a valid piece (q, r, b, n): " << endl;
+                }
+
+            }
+            // attach cells to all pieces
+            for (int i = 0; i < (int) b.size(); ++i) {
+                for (int j = 0; j < (int) b.at(i).size(); ++j) {
+                    b[i][j]->set_all_pieces(get_ref_pieces());
+                }
+            }
+            // id
+            new_p->set_id(get_count() + 32);
+            Move *m = new Move(piece, new_p, cur_cell, cur_cell, get_count());
+            add_move(m);
+            piece->create_unique_status();
+        }
+    }
+}
+
 // notify
 void Chess::notify() {
+    vector<vector<Cell*>> b = get_ref_board();
     // set all pieces
     all_pieces  = get_ref_pieces();
     for (auto piece : all_pieces) {
@@ -360,6 +500,14 @@ void Chess::notify() {
             } else {
                 checkmate = -1;
             }
+            // check for castle
+            if (piece->receive_unique_status()) {
+                castle(piece);
+            }
+        } else if (piece->get_value() == 1) { // is pawn
+            if (piece->get_cell()->get_row() == 0 || piece->get_cell()->get_row() == 7) {
+                promote(piece);
+            } 
         }
     }
 }

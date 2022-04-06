@@ -167,3 +167,7 @@ void Queen::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, in
         }
     }
 }
+
+void Queen::unique_status() {}
+
+bool Queen::get_unique_status() { return false; }

@@ -46,8 +46,7 @@ vector<int> LevelOne::make_move() {
         while (start_piece->num_valid_moves() == 0) {
             random = rand() % current_pieces.size();
             start_piece = current_pieces.at(random);
-        }
-        
+        }        
 
         Cell *start_cell = start_piece->get_cell();
         int randrowi = start_cell->get_row();

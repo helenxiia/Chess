@@ -75,5 +75,45 @@ void King::generate_moves(std::vector<std::vector<Cell*>> board, Cell *cell, int
             }
         }
     }
+    vector<vector<Cell*>> b = get_board()->get_ref_board();
+    // check for castling
+    if (get_has_not_moved()) {
+        if (get_color() == 0) { // white
+            // kings side
+            if (b[7][5]->get_piece() == nullptr && b[7][5]->get_threats(1) == 0 &&
+                b[7][6]->get_piece() == nullptr && b[7][6]->get_threats(1) == 0 &&
+                b[7][7]->get_piece()->get_has_not_moved()) {
+                    modify_valid_moves(b[7][6], 4);
+                }
+            // queens side
+            if (b[7][1]->get_piece() == nullptr && b[7][1]->get_threats(1) == 0 &&
+                b[7][2]->get_piece() == nullptr && b[7][2]->get_threats(1) == 0 &&
+                b[7][3]->get_piece() == nullptr && b[7][3]->get_threats(1) == 0 &&
+                b[7][0]->get_piece()->get_has_not_moved()) {
+                    modify_valid_moves(b[7][2], 4);
+                }
+        } else if (get_color() == 1) { // black
+            // kings side
+            if (b[0][5]->get_piece() == nullptr && b[0][5]->get_threats(0) == 0 &&
+                b[0][6]->get_piece() == nullptr && b[0][6]->get_threats(0) == 0 &&
+                b[0][7]->get_piece()->get_has_not_moved()) {
+                    modify_valid_moves(b[0][6], 4);
+                }
+            // queens side
+            if (b[0][1]->get_piece() == nullptr && b[0][1]->get_threats(0) == 0 &&
+                b[0][2]->get_piece() == nullptr && b[0][2]->get_threats(0) == 0 &&
+                b[0][3]->get_piece() == nullptr && b[0][3]->get_threats(0) == 0 &&
+                b[0][0]->get_piece()->get_has_not_moved()) {
+                    modify_valid_moves(b[0][2], 4);
+                }
+        }
+    }
 }
 
+void King::unique_status() {
+    castle = !castle;
+}
+
+bool King::get_unique_status() {
+    return castle;
+}
