@@ -344,6 +344,14 @@ void Board::run(vector<string> player_names, bool undo_mode) {
                 td->print_board("chess", -1);
             } else {
                 cout << "Game State Is Invalid" << endl;
+                // increment turn
+                if (turn == (int) players.size() - 1) { // it is last player's turn
+                    turn = 0;
+                } else {
+                    ++turn;
+                }
+                // increment count
+                ++count;
                 undo();
             }
             // display
