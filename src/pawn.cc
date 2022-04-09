@@ -44,13 +44,13 @@ void Pawn::generate_moves(vector<vector<Cell*>> board, Cell *cell, int row, int 
 
         if (new_col_l >= 0) {
             Piece *cell_piece2 = board[new_row][new_col_l]->get_piece();
-            if (cell_piece2 != nullptr) {
+            if (cell_piece2 != nullptr && cell_piece2->get_color() != this->get_color()) {
                 modify_valid_moves(board[new_row][new_col_l], 2); // add to valid moves, captures
             }
         }
         if (new_col_r < 8) {
             Piece *cell_piece3 = board[new_row][new_col_r]->get_piece();
-            if (cell_piece3 != nullptr) {
+            if (cell_piece3 != nullptr && cell_piece3->get_color() != this->get_color()) {
                 modify_valid_moves(board[new_row][new_col_r], 2); // add to valid moves, captures
             }
 
