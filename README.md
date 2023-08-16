@@ -1,5 +1,5 @@
 # Chess
-CS246: A5 Group Project
+CS246 (Object-Oriented Software Development) : A5 Group Project
 
 Made by: Helen, Tracy and Boya
 # Documentation
